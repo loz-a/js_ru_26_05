@@ -47,7 +47,8 @@ Article.propTypes = {
     article: PropTypes.shape({
         title: PropTypes.string.isRequired,
         text: PropTypes.string,
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        comments: PropTypes.array
     }),
     options: PropTypes.object
 }
