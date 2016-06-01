@@ -1,14 +1,14 @@
-import { PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 function Comment(props) {
-    const { comment } = this.props
+    const { comment } = props
 
     return (
         <article>
             <header>
-                <h4>
+                <h5>
                     Posted By: {comment.name}
-                </h4>
+                </h5>
             </header>
             <p>
                 {comment.text}
@@ -19,7 +19,7 @@ function Comment(props) {
 
 Comment.propTypes = {
     comment: PropTypes.shape({
-        id: PropTypes.num.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired
     })
