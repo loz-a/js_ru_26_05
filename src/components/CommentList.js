@@ -1,14 +1,18 @@
 import React, { PropTypes, Component } from 'react'
 import Comment from './Comment'
+import toggleOpen from '../decorators/toggleOpen'
 
 class CommentList extends Component {
-    state = {
-        isHide: true
+
+    static propTypes = {
+        comments: PropTypes.array,
+        // from toggleOpen decorator
+        isHide: PropTypes.bool,
+        toggleVisibility: PropTypes.func
     }
 
     render() {
-        const { comments } = this.props
-        const { isHide }   = this.state
+        const { comments, isHide, toggleVisibility } = this.props
 
         if (!comments) return null
 
@@ -18,22 +22,69 @@ class CommentList extends Component {
         return (
             <section>
                 <h4>
-                    <a href="#" onClick={this.toggleVisibility}>{visibility} {comments.length} comments</a>:
+                    <a href="#" onClick={toggleVisibility}>{visibility} {comments.length} comments</a>:
                  </h4>
                 {commentItems}
             </section>
         )
     }
-
-    toggleVisibility = (evt) => {
-        this.setState({
-            isHide: !this.state.isHide
-        })
-    }
 }
 
-CommentList.propTypes = {
-    comments: PropTypes.array
-}
+// CommentList.propTypes = {
+//     comments: PropTypes.array
+// }
 
-export default CommentList
+export default toggleOpen(CommentList)
+
+
+// =======
+// import React, { Component, PropTypes } from 'react'
+// import Comment from './Comment'
+// import toggleOpen from '../decorators/toggleOpen'
+//
+// class CommentList extends Component {
+//     static defaultProps = {
+//
+//     }
+//
+//     static propTypes = {
+//         comments: PropTypes.array,
+//         //from toggleOpen decorator
+//         isOpen: PropTypes.bool,
+//         toggleOpen: PropTypes.func
+//     };
+//     render() {
+//         return (
+//             <div>
+//                 {this.getToggler()}
+//                 {this.getList()}
+//             </div>
+//         )
+//     }
+//
+//     componentDidMount() {
+//         console.log('I am mounted')
+//     }
+//
+//     componentWillUpdate(nextProps) {
+//         console.log(this.props.isOpen, ' changes to ', nextProps.isOpen)
+//     }
+//
+//
+//     getToggler() {
+//         const { isOpen, toggleOpen } = this.props
+//         const text = isOpen ? 'hide comments' : 'show comments'
+//         return <a href = "#" onClick = {toggleOpen}>{text}</a>
+//     }
+//
+//     getList() {
+//         const { comments, isOpen } = this.props
+//         if (!isOpen) return null
+//         if (!comments || !comments.length) return <h3>No comments yet</h3>
+//         const items = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
+//         return <ul>{items}</ul>
+//     }
+// }
+//
+// export default toggleOpen(CommentList)
+// >>>>>>> upstream/master

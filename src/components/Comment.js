@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react'
 
 function Comment(props) {
-    const { comment } = props
+    const { comment: {text, name} } = props
 
     return (
         <article>
             <header>
                 <h5>
-                    Posted By: {comment.name}
+                    Posted By: {name}
                 </h5>
             </header>
             <p>
-                {comment.text}
+                {text}
             </p>
         </article>
     )
