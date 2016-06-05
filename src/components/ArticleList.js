@@ -1,25 +1,32 @@
 import React, { PropTypes, Component } from 'react'
 import Article from './Article'
+import OneOpenPage from '../decorators/OneOpenPage'
 
 class ArticleList extends Component {
 
     static propTypes = {
-        articles: PropTypes.array.isRequired
-    }
-
-    state = {
-        openedArticle: null
+        articles: PropTypes.array.isRequired,
+        openedArticleId: PropTypes.string,
+        setOpenArticleId: PropTypes.func.isRequired
     }
 
     render() {
-        const { articles } = this.props
+        const {
+            articles,
+            openedArticleId = null,
+            setOpenArticleId
+         } = this.props
 
-        const articleItems = articles.map((article) => <li key={article.id}>
-            <Article article = {article}
-                     isOpen = {article.id === this.state.openedArticle}
-                openArticle = {this.toggleOpen(article.id)}
-            />
-        </li>)
+        if (!articles) return null
+
+        const articleItems = articles.map((article) => {
+            return (<li key={article.id}>
+                <Article article = {article}
+                    visibilityFlag = {openedArticleId === article.id}
+                    notifyOpenArticleId = {setOpenArticleId(article.id)}
+                />
+            </li>)
+        })
 
         return (
             <ul>
@@ -27,13 +34,6 @@ class ArticleList extends Component {
             </ul>
         )
     }
-
-    toggleOpen = id => ev => {
-        this.setState({
-            openedArticle: id
-        })
-    }
-
 }
 
-export default ArticleList
+export default OneOpenPage(ArticleList)

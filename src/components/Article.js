@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import CommentList from './CommentList'
+import ToggleOpen from '../decorators/ToggleOpen'
 
 class Article extends Component {
 
@@ -10,21 +11,26 @@ class Article extends Component {
             id: PropTypes.string.isRequired,
             comments: PropTypes.array
         }),
-        isOpen: PropTypes.bool,
+        visibilityFlag: PropTypes.bool,
         openArticle: PropTypes.func,
         options: PropTypes.object
     }
 
     render() {
-        const { article, openArticle, isOpen } = this.props
+        const { article, visibilityFlag, toggleVisibility, notifyOpenArticleId } = this.props
         if (!article) return <h3>No article</h3>
 
-        const body = isOpen ? <section>{article.text}</section> : null
-        const comments = isOpen ? <CommentList comments={article.comments} /> : null
+        const body = !visibilityFlag ? null : <section>{article.text}</section>
+        const comments = !visibilityFlag ? null : <CommentList comments={article.comments} />
+
+        const clickHandler = (evt) => {
+            if (visibilityFlag) toggleVisibility()
+            else notifyOpenArticleId()
+        }
 
         return (
             <div>
-                <h3 onClick = {openArticle}>{article.title}</h3>
+                <h3 onClick = {clickHandler}>{article.title}</h3>
                 {body}
                 {comments}
             </div>
@@ -32,4 +38,4 @@ class Article extends Component {
     }
 }
 
-export default Article
+export default ToggleOpen(Article)

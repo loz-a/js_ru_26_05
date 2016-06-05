@@ -1,15 +1,20 @@
 export default {
     getInitialState() {
-        //this.props
+        const { visibilityFlag = false } = this.props
         return {
-            isOpen: false
+            visibilityFlag
         }
     },
 
-    toggleOpen(ev) {
-        ev.preventDefault()
+    componentWillReceiveProps(nextProps) {
+        const { visibilityFlag } = nextProps
+        this.setState({ visibilityFlag })
+    }
+
+    toggleVisibility(evt) {
+        if (evt && evt.preventDefault()) ev.preventDefault()
         this.setState({
-            isOpen: !this.state.isOpen
+            isOpen: !this.state.visibilityFlag
         })
     }
 }

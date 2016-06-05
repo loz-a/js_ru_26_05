@@ -3,21 +3,26 @@ import React, { Component } from 'react'
 export default (CustomComponent) => class DecoratedComponent extends Component {
 
     constructor(props) {
-        super()
+        super(props)
+        const { visibilityFlag = false } = props
+        this.state = { visibilityFlag }
+    }
 
-        this.state = {
-            isHide: true
-        };
+    componentWillReceiveProps(nextProps) {
+        const { visibilityFlag } = nextProps
+        this.setState({ visibilityFlag })
     }
 
     toggleVisibility = (evt) => {
         if (evt && evt.preventDefault) evt.preventDefault()
         this.setState({
-            isHide: !this.state.isHide
+            visibilityFlag: !this.state.visibilityFlag
         })
     }
 
-    render() {
-        return <CustomComponent {...this.props} isHide = {this.state.isHide} toggleVisibility = {this.toggleVisibility}/>
+    render() {        
+        return <CustomComponent {...this.props}
+            visibilityFlag = {this.state.visibilityFlag}
+            toggleVisibility = {this.toggleVisibility} />
     }
 }
