@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import Article from './Article'
+import Chart from './Chart'
 import OneOpenPage from '../decorators/OneOpenPage'
 
 class ArticleList extends Component {
@@ -29,9 +30,12 @@ class ArticleList extends Component {
         })
 
         return (
-            <ul>
-                {articleItems}
-            </ul>
+            <div>
+                <ul>
+                    {articleItems}
+                </ul>
+                <Chart/>
+            </div>
         )
     }
 }
