@@ -7,7 +7,7 @@ class Chart extends Component {
 
     componentDidMount() {
         console.log('---', this.refs.container);
-        this.refs.container.innerHTML = 'Hello world'
+        // this.refs.container.innerHTML = 'Hello world'
     }
 
     componentWillReceiveProps(nextProps) {

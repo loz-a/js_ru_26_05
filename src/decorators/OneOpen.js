@@ -3,18 +3,18 @@ import React, { Component } from 'react'
 export default (CustomComponent) => class DecoratedComponent extends Component {
 
     state = {
-        openedArticleId: null
+        openedId: null
     }
 
-    setOpenArticleId = (id) => () => {
+    setOpenId = (id) => () => {
         this.setState({
-            openedArticleId: id
+            openedId: id
         })
     }
 
-    render() {        
+    render() {
         return <CustomComponent {...this.props}
-        openedArticleId = {this.state.openedArticleId}
-        setOpenArticleId = {this.setOpenArticleId}/>
+        openedId = {this.state.openedId}
+        setOpenId = {this.setOpenId}/>
     }
 }

@@ -2,8 +2,12 @@ import React, { PropTypes, Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import Article from './Article'
 import Chart from './Chart'
-import OneOpenPage from '../decorators/OneOpenPage'
+import OneOpen from '../decorators/OneOpen'
 import Select from 'react-select'
+import DateRange from '../decorators/DateRange'
+import moment from 'moment'
+import 'moment-range'
+
 import 'react-select/dist/react-select.css'
 
 class ArticleList extends Component {
@@ -13,9 +17,13 @@ class ArticleList extends Component {
     }
 
     static propTypes = {
-        articles: PropTypes.array.isRequired,
-        openedArticleId: PropTypes.string,
-        setOpenArticleId: PropTypes.func.isRequired
+        articles:  PropTypes.array.isRequired,
+        openedId:  PropTypes.string,
+        setOpenId: PropTypes.func.isRequired,
+        dateRange: PropTypes.shape({
+            from: PropTypes.any,
+            to:   PropTypes.any
+        })
     }
 
     componentDidMount() {
@@ -25,19 +33,24 @@ class ArticleList extends Component {
     render() {
         const {
             articles,
-            openedArticleId = null,
-            setOpenArticleId
+            openedId = null,
+            setOpenId,
+            dateRange = null
          } = this.props
 
         if (!articles) return null
 
+        const range = this.getDateRange(dateRange)
+
         const articleItems = articles.map((article) => {
-            return (<li key={article.id}>
+            const isDisplay = range.contains(moment(article.createAt, 'MM-DD-YYYY'), true)
+
+            return isDisplay ? (<li key={article.id}>
                 <Article article = {article}
-                    visibilityFlag = {openedArticleId === article.id}
-                    notifyOpenArticleId = {setOpenArticleId(article.id)}
+                    openFlag = {openedId === article.id}
+                    notifyOpenId = {setOpenId(article.id)}
                 />
-            </li>)
+            </li>) : null
         })
 
         const options = articles.map((article) => ({
@@ -50,7 +63,9 @@ class ArticleList extends Component {
                 <ul>
                     {articleItems}
                 </ul>
+
                 <Chart ref="chart" />
+
                 <Select
                     options  = {options}
                     onChange = {this.handleChange}
@@ -66,6 +81,12 @@ class ArticleList extends Component {
             selected
         })
     }
+
+    getDateRange(dateRangeProps) {
+        const from = dateRangeProps.from || new Date(0)
+        const to   = dateRangeProps.to || new Date()
+        return moment.range(from, to)
+    }
 }
 
-export default OneOpenPage(ArticleList)
+export default DateRange(OneOpen(ArticleList))

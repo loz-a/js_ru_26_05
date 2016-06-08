@@ -9,23 +9,25 @@ class Article extends Component {
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             id: PropTypes.string.isRequired,
-            comments: PropTypes.array
+            comments: PropTypes.array,
+            createAt: PropTypes.string.isRequired
         }),
-        visibilityFlag: PropTypes.bool,
-        openArticle: PropTypes.func,
+        openFlag: PropTypes.bool,
+        toggleOpen: PropTypes.func.isRequired,
+        notifyOpenId: PropTypes.func.isRequired,
         options: PropTypes.object
     }
 
     render() {
-        const { article, visibilityFlag, toggleVisibility, notifyOpenArticleId } = this.props
+        const { article, openFlag, toggleOpen, notifyOpenId } = this.props
         if (!article) return <h3>No article</h3>
 
-        const body = !visibilityFlag ? null : <section>{article.text}</section>
-        const comments = !visibilityFlag ? null : <CommentList comments={article.comments} />
+        const body = !openFlag ? null : <section>{article.text}</section>
+        const comments = !openFlag ? null : <CommentList comments={article.comments} />
 
         const clickHandler = (evt) => {
-            if (visibilityFlag) toggleVisibility()
-            else notifyOpenArticleId()
+            if (openFlag) toggleOpen()
+            else notifyOpenId()
         }
 
         return (

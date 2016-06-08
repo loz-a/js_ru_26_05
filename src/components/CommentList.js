@@ -6,23 +6,22 @@ class CommentList extends Component {
 
     static propTypes = {
         comments: PropTypes.array,
-        // from toggleOpen decorator
-        visibilityFlag: PropTypes.bool,
-        toggleVisibility: PropTypes.func
+        openFlag: PropTypes.bool,
+        toggleOpen: PropTypes.func
     }
 
     render() {
-        const { comments, visibilityFlag, toggleVisibility } = this.props
+        const { comments, openFlag, toggleOpen } = this.props
 
         if (!comments) return null
 
-        const commentItems = !visibilityFlag ? null : comments.map((comment) => <Comment key={comment.id} comment={comment} />)
-        const visibility   = !visibilityFlag ? 'Show' : 'Hide'
+        const commentItems = !openFlag ? null : comments.map((comment) => <Comment key={comment.id} comment={comment} />)
+        const visibilityTitle   = !openFlag ? 'Show' : 'Hide'
 
         return (
             <section>
                 <h4>
-                    <a href="#" onClick={toggleVisibility}>{visibility} {comments.length} comments</a>:
+                    <a href="#" onClick={toggleOpen}>{visibilityTitle} {comments.length} comments</a>:
                  </h4>
                 {commentItems}
             </section>
