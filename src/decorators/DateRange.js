@@ -26,7 +26,7 @@ export default (CustomComponent) => class DecoratedComponent extends React.Compo
 
     render() {
         const { from, to } = this.state
-
+        //вот это не очень хорошая практика выносить верстку в декоратор, Если вы так делаете - надо быть уверенным что именно эту верстку вы потом сможете использовать где угодно
         return (
             <div>
 
