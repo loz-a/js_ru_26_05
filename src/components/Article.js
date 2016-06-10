@@ -18,6 +18,12 @@ class Article extends Component {
         options: PropTypes.object
     }
 
+    deleteArticle = (evt) => {
+        evt.preventDefault()
+        evt.stopPropagation()
+        console.log(`delete article ${this.props.article.id}`);
+    }
+
     render() {
         const { article, openFlag, toggleOpen, notifyOpenId } = this.props
         if (!article) return <h3>No article</h3>
@@ -32,7 +38,9 @@ class Article extends Component {
 
         return (
             <div>
-                <h3 onClick = {clickHandler}>{article.title}</h3>
+                <h3 onClick = {clickHandler}>{article.title}
+                    <a href = "" onClick = {this.deleteArticle}>[delete]</a>
+                </h3>
                 {body}
                 {comments}
             </div>

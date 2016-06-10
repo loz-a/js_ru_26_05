@@ -3,14 +3,17 @@ var webpack = require('webpack')
 
 module.exports = {
     devtool: 'source-map',
+
     entry: [
         './src/app.js'
     ],
+
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },
+
     module: {
         loaders: [
             {
@@ -23,6 +26,10 @@ module.exports = {
             }
         ]
     },
+
+    plugins: [
+        new webpack.ContextReplacementPlugin(/node_modules[\\\/]moment[\\\/]locale/, /uk|ru|en-gb/)
+    ],
 
     devServer: {
         host: 'localhost',
