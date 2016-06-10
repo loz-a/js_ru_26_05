@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import CommentList from './CommentList'
 import ToggleOpen from '../decorators/ToggleOpen'
+import { deleteArticle } from '../AC/articles'
 
 class Article extends Component {
 
@@ -18,10 +19,10 @@ class Article extends Component {
         options: PropTypes.object
     }
 
-    deleteArticle = (evt) => {
+    handleDeleteArticle = (evt) => {
         evt.preventDefault()
         evt.stopPropagation()
-        console.log(`delete article ${this.props.article.id}`);
+        deleteArticle(this.props.article.id);
     }
 
     render() {
@@ -39,7 +40,7 @@ class Article extends Component {
         return (
             <div>
                 <h3 onClick = {clickHandler}>{article.title}
-                    <a href = "" onClick = {this.deleteArticle}>[delete]</a>
+                    <a href = "" onClick = {this.handleDeleteArticle}>[delete]</a>
                 </h3>
                 {body}
                 {comments}

@@ -1,23 +1,23 @@
-export default class ArticleStore {
+import BaseStore from './BaseStore'
+import { DELETE_ARTICLE } from '../constants'
+
+export default class ArticleStore extends BaseStore {
     constructor(initialState = []) {
-        this._items = {}
-        initialState.forEach(this._add)
-    }
+        super(initialState)
 
-    getAll = () => {
-        return Object.keys(this._items).map(this.getById)
-    }
+        this._subscribe((action) => {
+            const { type, payload } = action
 
-    getById = (id) => {
-        return this._items[id]
-    }
+            switch (type) {
+                case DELETE_ARTICLE:
+                    this._delete(payload.id)
+                    break;
+                default:
+                    return
+            }
 
-    _add = (item) => {
-        this._items[item.id] = item
-    }
+            this._emitChange()
+        })
 
-    _delete = (id) => {
-        delete this._items[id]
     }
-
 }
