@@ -1,15 +1,16 @@
 import Article from './Article'
-import BaseStore from './BaseStore'
+import Comment from './Comment'
 import {normalizedArticles, normalizedComments} from '../fixtures'
 
-export const stores = {}
+const stores = {}
 
 Object.assign(stores, {
     articles: new Article(stores, normalizedArticles),
-    comments: new BaseStore(stores, normalizedComments)
+    comments: new Comment(stores, normalizedComments)
 })
 
+export default stores
 export const articleStore = stores.articles
 export const commentStore = stores.comments
 
-window.articleStore = articleStore
+window.stores = stores

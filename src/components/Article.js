@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import CommentList from './CommentList'
 import ToggleOpen from '../decorators/ToggleOpen'
-import { deleteArticle } from '../AC/articles'
+import { deleteArticle } from '../AC/article'
 import moment from 'moment'
 
 class Article extends Component {
@@ -35,7 +35,12 @@ class Article extends Component {
         if (!article) return <h3>No article</h3>
 
         const body = !openFlag ? null : <section>{article.text}</section>
-        const comments = !openFlag ? null : <CommentList comments={article.getRelation('comments')} />
+
+        const commentsArgs = {
+            comments: article.getRelation('comments'),
+            articleId: article.id
+        }
+        const comments = !openFlag ? null : <CommentList {...commentsArgs} />
 
         const clickHandler = (evt) => {
             if (openFlag) toggleOpen()

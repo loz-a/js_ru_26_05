@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher'
+ import AppDispatcher from '../dispatcher'
 import { EventEmitter } from 'events'
 import DataWrapper from './DataWrapper'
 import { DELETE_ARTICLE } from '../constants'
@@ -10,10 +10,10 @@ export default class BaseStore extends EventEmitter {
         super()
         this._items = {}
         this._stores = stores
-        initialState.forEach(this._add)
+        initialState.forEach(this._add.bind(this))
     }
 
-    _subscribe = (callback) => {
+    _subscribe(callback) {
         AppDispatcher.register(callback)
     }
 
@@ -25,19 +25,19 @@ export default class BaseStore extends EventEmitter {
         return this._items[id]
     }
 
-    getStoreByName(name) {
+    getStoreByName = (name) => {
         return this._stores[name]
     }
 
-    _add = (item) => {
+    _add(item) {
         this._items[item.id] = new DataWrapper(item, this)
     }
 
-    _delete = (id) => {
+    _delete(id) {
         delete this._items[id]
     }
 
-    _emitChange = () => {
+    _emitChange() {
         this.emit(SOME_CHANGE_EVENT)
     }
 

@@ -1,23 +1,25 @@
 import React, { Component, PropTypes } from 'react'
-import { articleStore } from '../stores'
+import stores from '../stores'
 import ArticleList from './ArticleList'
 
 export default class AppContainer extends Component {
     state = {
-        articles: articleStore.getAll()
+        articles: stores.articles.getAll()
     }
 
     componentDidMount() {
-        articleStore.addChangeListener(this.handleChange)
+        stores.articles.addChangeListener(this.handleChange)
+        stores.comments.addChangeListener(this.handleChange)
     }
 
     componentWillUnmount() {
-        articleStore.removeChangeListener(this.handleChange)
+        stores.articles.removeChangeListener(this.handleChange)
+        stores.comments.removeChangeListener(this.handleChange)
     }
 
     handleChange = () => {
         this.setState({
-            articles: articleStore.getAll()
+            articles: stores.articles.getAll()
         })
     }
 

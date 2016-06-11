@@ -1,17 +1,24 @@
 import React, { PropTypes, Component } from 'react'
-import Comment from './Comment'
 import ToggleOpen from '../decorators/ToggleOpen'
+import Comment from './Comment'
+import CommentDialog from './CommentDialog'
 
 class CommentList extends Component {
 
     static propTypes = {
         comments: PropTypes.array,
         openFlag: PropTypes.bool,
-        toggleOpen: PropTypes.func
+        toggleOpen: PropTypes.func,
+        articleId: PropTypes.string.isRequired
     }
 
     render() {
-        const { comments, openFlag, toggleOpen } = this.props
+        const {
+            comments,
+            openFlag,
+            toggleOpen,
+            articleId
+        } = this.props
 
         if (!comments) return null
 
@@ -24,6 +31,7 @@ class CommentList extends Component {
                     <a href="#" onClick={toggleOpen}>{visibilityTitle} {comments.length} comments</a>:
                  </h4>
                 {commentItems}
+                <CommentDialog articleId = {articleId} />
             </section>
         )
     }
