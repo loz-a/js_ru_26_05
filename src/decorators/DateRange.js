@@ -1,14 +1,18 @@
-import React from 'react'
-import moment from 'moment'
+import React, { PropTypes, Component } from 'react'
 import DayPicker, { DateUtils } from 'react-day-picker'
+import moment from 'moment'
 
 import 'react-day-picker/lib/style.css'
 
-export default (CustomComponent) => class DecoratedComponent extends React.Component {
+export default (CustomComponent) => class DecoratedComponent extends Component {
 
     state = {
         from: null,
         to: null
+    }
+
+    static propTypes = {
+        articles:  PropTypes.array.isRequired
     }
 
     handleDayClick = (e, day) => {
@@ -24,14 +28,18 @@ export default (CustomComponent) => class DecoratedComponent extends React.Compo
         })
     }
 
+    filterArticles = (articles) => {
+        const from = this.state.from || new Date(0)
+        const to   = this.state.to || new Date()        
+        return articles.filter((article) => DateUtils.isDayInRange(new Date(article.date), {from, to}))
+    }
+
     render() {
         const { from, to } = this.state
+        const articles = this.filterArticles(this.props.articles)
 
         return (
             <div>
-
-                {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
-                {from && !to && <p>Please select the <strong>last day</strong>.</p>}
                 {from && to &&
                   <p>
                     <a href="#" onClick={this.handleResetClick}>Reset</a>
@@ -46,7 +54,7 @@ export default (CustomComponent) => class DecoratedComponent extends React.Compo
                 />
 
                 <CustomComponent {...this.props}
-                    dateRange = {this.state}
+                    articles = {articles}
                 />
             </div>
         )

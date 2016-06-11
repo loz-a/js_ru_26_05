@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import CommentList from './CommentList'
 import ToggleOpen from '../decorators/ToggleOpen'
 import { deleteArticle } from '../AC/articles'
+import moment from 'moment'
 
 class Article extends Component {
 
@@ -11,7 +12,7 @@ class Article extends Component {
             text: PropTypes.string,
             id: PropTypes.string.isRequired,
             comments: PropTypes.array,
-            createAt: PropTypes.string.isRequired
+            date: PropTypes.string.isRequired
         }),
         openFlag: PropTypes.bool,
         toggleOpen: PropTypes.func.isRequired,
@@ -23,6 +24,10 @@ class Article extends Component {
         evt.preventDefault()
         evt.stopPropagation()
         deleteArticle(this.props.article.id);
+    }
+
+    static ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.substr(1)
     }
 
     render() {
@@ -38,13 +43,20 @@ class Article extends Component {
         }
 
         return (
-            <div>
-                <h3 onClick = {clickHandler}>{article.title}
-                    <a href = "" onClick = {this.handleDeleteArticle}>[delete]</a>
-                </h3>
+            <article>
+                <header>
+                    <h3 onClick = {clickHandler}>{article.title}
+                        <a href = "" onClick = {this.handleDeleteArticle}>[delete]</a>
+                    </h3>
+                    <p>
+                        <time pubdate datetime = {article.date}>
+                            {Article.ucfirst(moment(new Date(article.date)).fromNow())}
+                        </time>
+                    </p>
+                </header>
                 {body}
                 {comments}
-            </div>
+            </article>
         )
     }
 }

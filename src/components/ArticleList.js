@@ -5,8 +5,6 @@ import Chart from './Chart'
 import OneOpen from '../decorators/OneOpen'
 import Select from 'react-select'
 import DateRange from '../decorators/DateRange'
-import moment from 'moment'
-import 'moment-range'
 
 import 'react-select/dist/react-select.css'
 
@@ -19,11 +17,7 @@ class ArticleList extends Component {
     static propTypes = {
         articles:  PropTypes.array.isRequired,
         openedId:  PropTypes.string,
-        setOpenId: PropTypes.func.isRequired,
-        dateRange: PropTypes.shape({
-            from: PropTypes.any,
-            to:   PropTypes.any
-        })
+        setOpenId: PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -34,24 +28,19 @@ class ArticleList extends Component {
         const {
             articles,
             openedId = null,
-            setOpenId,
-            dateRange = null
+            setOpenId
          } = this.props
 
         if (!articles) return null
 
-        const range = this.getDateRange(dateRange)
-
-        const articleItems = articles.map((article) => {
-            const isDisplay = range.contains(moment(article.createAt, 'MM-DD-YYYY'), true)
-
-            return isDisplay ? (<li key={article.id}>
+        const articleItems = articles.map((article) =>
+            <li key={article.id}>
                 <Article article = {article}
                     openFlag = {openedId === article.id}
                     notifyOpenId = {setOpenId(article.id)}
                 />
-            </li>) : null
-        })
+            </li>
+        )
 
         const options = articles.map((article) => ({
             label: article.title,
@@ -80,12 +69,6 @@ class ArticleList extends Component {
         this.setState({
             selected
         })
-    }
-
-    getDateRange(dateRangeProps) {
-        const from = dateRangeProps.from || new Date(0)
-        const to   = dateRangeProps.to || new Date()
-        return moment.range(from, to)
     }
 }
 
