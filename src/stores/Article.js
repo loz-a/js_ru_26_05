@@ -2,8 +2,8 @@ import BaseStore from './BaseStore'
 import { DELETE_ARTICLE } from '../constants'
 
 export default class ArticleStore extends BaseStore {
-    constructor(initialState = []) {
-        super(initialState)
+    constructor(...args) {
+        super(...args)
 
         this._subscribe((action) => {
             const { type, payload } = action

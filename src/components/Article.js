@@ -35,7 +35,7 @@ class Article extends Component {
         if (!article) return <h3>No article</h3>
 
         const body = !openFlag ? null : <section>{article.text}</section>
-        const comments = !openFlag ? null : <CommentList comments={article.comments} />
+        const comments = !openFlag ? null : <CommentList comments={article.getRelation('comments')} />
 
         const clickHandler = (evt) => {
             if (openFlag) toggleOpen()
