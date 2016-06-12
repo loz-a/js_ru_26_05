@@ -30,6 +30,7 @@ export default (CustomComponent) => class DecoratedComponent extends Component {
 
     pupulateStores() {
         const populatedStores = {}
+        //не всегда нужно подписываться на все сторы и не всегда нужно именно .getAll()
         Object.keys(stores).forEach((key) => {
             populatedStores[key] = stores[key].getAll()
         })
