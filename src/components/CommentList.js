@@ -8,7 +8,7 @@ class CommentList extends Component {
     static propTypes = {
         comments: PropTypes.array,
         openFlag: PropTypes.bool,
-        toggleOpen: PropTypes.func,
+        toggleOpen: PropTypes.func.isRequired,
         articleId: PropTypes.string.isRequired
     }
 
@@ -31,7 +31,10 @@ class CommentList extends Component {
                     <a href="#" onClick={toggleOpen}>{visibilityTitle} {comments.length} comments</a>:
                  </h4>
                 {commentItems}
-                <CommentDialog articleId = {articleId} />
+                <CommentDialog
+                    articleId = {articleId}
+                    toggleOpen = {toggleOpen}
+                    openFlag = {openFlag} />
             </section>
         )
     }

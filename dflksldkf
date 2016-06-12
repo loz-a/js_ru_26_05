@@ -1,0 +1,40 @@
+* 1870f21 2016-06-12 | add StoreSubscription decorator (HEAD -> master) [loz]
+* fbb9d01 2016-06-12 | implement add comment behaviour [loz]
+* aac63c8 2016-06-11 | add DataWrapper [loz]
+* 4b11bb3 2016-06-11 | small refactoring [loz]
+* 3a750f2 2016-06-11 | flux full life cycle 2 [loz]
+* 9bca8ec 2016-06-11 | flux full life cycle [loz]
+* 8ed4627 2016-06-10 | add simple store [loz]
+*   5dc08b1 2016-06-08 | Merge branch 'master' of https://github.com/loz-a/js_ru_26_05 (origin/master, origin/HEAD) [loz]
+[32m|[m[33m\[m  
+[32m|[m * 71295d4 2016-06-05 | Update OneOpenPage.js [Roman]
+* [33m|[m 7a293ac 2016-06-08 | add react-day-picker [loz]
+* [33m|[m 49e3893 2016-06-08 | add dates to fixtures [loz]
+* [33m|[m 010ffa4 2016-06-08 | add react-select [loz]
+* [33m|[m b01c207 2016-06-08 | add Chart component [loz]
+[33m|[m[33m/[m  
+* 30335b2 2016-06-05 | small refactoring [loz]
+*   b830ba1 2016-06-05 | Merge branch 'master' of https://github.com/loz-a/js_ru_26_05 [loz]
+[34m|[m[35m\[m  
+[34m|[m * 5d65ad3 2016-06-01 | Create README.md [Roman]
+* [35m|[m 4abd52b 2016-06-05 | second lesson homework [loz]
+* [35m|[m   88f71c2 2016-06-04 | merge with branch from second lesson and small refactoring [loz]
+[35m|[m[1;31m\[m [35m\[m  
+[35m|[m [1;31m|[m[35m/[m  
+[35m|[m[35m/[m[1;31m|[m   
+[35m|[m * fed1461 2016-06-02 | add some lyfecycle (upstream/master) [Roman Iakobchuk]
+[35m|[m * a67d32f 2016-06-02 | add decorator [Roman Iakobchuk]
+[35m|[m * 09e9524 2016-06-02 | add mixin [Roman Iakobchuk]
+[35m|[m * 497feb8 2016-06-02 | add old syntax [Roman Iakobchuk]
+[35m|[m * 81863c1 2016-06-02 | add reverse dataflow [Roman Iakobchuk]
+[35m|[m * e0d03ac 2016-06-02 | remove useless vars from render [Roman Iakobchuk]
+[35m|[m * 2d86b6e 2016-06-02 | add comment list [Roman Iakobchuk]
+* [1;31m|[m c0a1a3c 2016-06-01 | create CommentList component [loz]
+* [1;31m|[m d858892 2016-05-31 | small refactoring [loz]
+* [1;31m|[m 2565d60 2016-05-31 | add Comment component [loz]
+[1;31m|[m[1;31m/[m  
+* 58ef24a 2016-05-30 | add statefull component [Roman Iakobchuk]
+* a41ec59 2016-05-30 | add iterator [Roman Iakobchuk]
+* 7732b47 2016-05-30 | add propTypes [Roman Iakobchuk]
+* 49854c0 2016-05-30 | add simple component [Roman Iakobchuk]
+* 18671e0 2016-05-30 | initial commit [Roman Iakobchuk]

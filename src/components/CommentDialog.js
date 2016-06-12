@@ -5,21 +5,35 @@ import { notifyArticleAboutNewComment } from '../AC/article'
 class CommentDialog extends Component {
 
     static propTypes = {
-        articleId: PropTypes.string.isRequired
+        articleId: PropTypes.string.isRequired,
+        toggleOpen: PropTypes.func.isRequired,
+        openFlag: PropTypes.bool
     }
 
     handleSubmit = (evt) => {
         evt.preventDefault()
 
-        addComment(
-            this._name.value,
-            this._text.value,
-            this.props.articleId
-        )
+        const { articleId } = this.props
 
-        notifyArticleAboutNewComment(this.props.articleId)
+        addComment(this._name.value, this._text.value, articleId)
+        notifyArticleAboutNewComment(articleId)
+    }
 
-        this._name.value = this._text.value = ''
+    resetForm = () => {
+        this._name.value = ''
+        this._text.value = ''
+    }
+
+    componentDidUpdate(prevProps) {
+        const {
+            toggleOpen,
+            openFlag = false
+        } = prevProps
+
+        const isFormNotEmpty = this._name.value.length || this._name.value.length
+
+         if (isFormNotEmpty && openFlag) toggleOpen() // tried to add comment and comment list was open
+         this.resetForm()
     }
 
     render() {
