@@ -30,7 +30,7 @@ export default (CustomComponent) => class DecoratedComponent extends Component {
 
     filterArticles = (articles) => {
         const from = this.state.from || new Date(0)
-        const to   = this.state.to || new Date()        
+        const to   = this.state.to || new Date()
         return articles.filter((article) => DateUtils.isDayInRange(new Date(article.date), {from, to}))
     }
 
