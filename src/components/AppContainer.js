@@ -1,29 +1,16 @@
-import React, { Component, PropTypes } from 'react'
-import stores from '../stores'
+import React, { PropTypes } from 'react'
 import ArticleList from './ArticleList'
+import StoreSubscription from '../decorators/StoreSubscription'
 
-export default class AppContainer extends Component {
-    state = {
-        articles: stores.articles.getAll()
-    }
-
-    componentDidMount() {
-        stores.articles.addChangeListener(this.handleChange)
-        stores.comments.addChangeListener(this.handleChange)
-    }
-
-    componentWillUnmount() {
-        stores.articles.removeChangeListener(this.handleChange)
-        stores.comments.removeChangeListener(this.handleChange)
-    }
-
-    handleChange = () => {
-        this.setState({
-            articles: stores.articles.getAll()
-        })
-    }
-
-    render() {
-        return <ArticleList articles = {this.state.articles} />
-    }
+function AppContainer(props) {
+    const articles = props.stores.articles
+    return <ArticleList articles = {articles} />
 }
+
+AppContainer.propTypes = {
+    stores: PropTypes.shape({
+        articles: PropTypes.array.isRequired
+    }).isRequired
+}
+
+export default StoreSubscription(AppContainer)
