@@ -1,44 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
 import stores from '../stores'
 
-export default (CustomComponent) => class DecoratedComponent extends Component {
+export default (storeNames, getStateFromStores) => {
+    storeNames = storeNames || Object.keys(stores)
 
-    state = {
-        stores: null
+    return (CustomComponent) => class DecoratedComponent extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = getStateFromStores(stores, props)
+        }
+
+        componentWillReceiveProps(nextProps) {
+            this.setState(getStateFromStores(stores, nextProps))
+        }
+
+        componentDidMount() {
+            storeNames
+                .forEach((name) => stores[name].addChangeListener(this.handleStoresChange))
+        }
+
+        componentWillUnmount() {
+            storeNames
+                .forEach((name) => stores[name].removeChangeListener(this.handleStoresChange))
+        }
+
+        handleStoresChange = () => {
+            this.setState(getStateFromStores(stores, this.props))
+        }
+
+        render() {
+            return <CustomComponent {...this.props} {...this.state} />
+        }
     }
-
-    constructor(props) {
-        super(props)
-        this.state.stores = this.pupulateStores()
-    }
-
-    componentDidMount() {
-        stores.articles.addChangeListener(this.updateStoresState)
-        stores.comments.addChangeListener(this.updateStoresState)
-    }
-
-    componentWillUnmount() {
-        stores.articles.removeChangeListener(this.updateStoresState)
-        stores.comments.removeChangeListener(this.updateStoresState)
-    }
-
-    updateStoresState = () => {
-        this.setState({
-            stores: this.pupulateStores()
-        })
-    }
-
-    pupulateStores() {
-        const populatedStores = {}
-        //не всегда нужно подписываться на все сторы и не всегда нужно именно .getAll()
-        Object.keys(stores).forEach((key) => {
-            populatedStores[key] = stores[key].getAll()
-        })
-        return populatedStores
-    }
-
-    render() {
-        return <CustomComponent {...this.props} stores = {this.state.stores} />
-    }
-
 }

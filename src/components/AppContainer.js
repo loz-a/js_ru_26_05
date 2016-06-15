@@ -3,14 +3,14 @@ import ArticleList from './ArticleList'
 import StoreSubscription from '../decorators/StoreSubscription'
 
 function AppContainer(props) {
-    const articles = props.stores.articles
-    return <ArticleList articles = {articles} />
+    return <ArticleList articles = {props.articles} />
 }
 
-AppContainer.propTypes = {
-    stores: PropTypes.shape({
-        articles: PropTypes.array.isRequired
-    }).isRequired
+function getState(stores) {
+    const { articles } = stores
+    return {
+        articles: articles.getAll()
+    }
 }
 
-export default StoreSubscription(AppContainer)
+export default StoreSubscription(null, getState)(AppContainer)
