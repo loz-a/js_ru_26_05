@@ -1,24 +1,9 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
 import CommentList from './CommentList'
-import ToggleOpen from '../decorators/ToggleOpen'
 import { deleteArticle } from '../AC/article'
 import moment from 'moment'
 
-class Article extends Component {
-
-    static propTypes = {
-        article: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string,
-            id: PropTypes.string.isRequired,
-            comments: PropTypes.array,
-            date: PropTypes.string.isRequired
-        }),
-        openFlag: PropTypes.bool,
-        toggleOpen: PropTypes.func.isRequired,
-        notifyOpenId: PropTypes.func.isRequired,
-        options: PropTypes.object
-    }
+class Article extends React.Component {
 
     handleDeleteArticle = (evt) => {
         evt.preventDefault()
@@ -31,27 +16,16 @@ class Article extends Component {
     }
 
     render() {
-        const { article, openFlag, toggleOpen, notifyOpenId } = this.props
+        const { article, isOpen, openArticle } = this.props
         if (!article) return <h3>No article</h3>
 
-        const body = !openFlag ? null : <section>{article.text}</section>
-
-        const commentsArgs = {
-            comments: article.getRelation('comments'),
-            articleId: article.id
-        }
-        const comments = !openFlag ? null : <CommentList {...commentsArgs} />
-
-        const clickHandler = (evt) => {
-            if (openFlag) toggleOpen()
-            else notifyOpenId()
-        }
+        const body = this.getBody()
 
         return (
             <article>
                 <header>
-                    <h3 onClick = {clickHandler}>{article.title}
-                        <a href = "" onClick = {this.handleDeleteArticle}>[delete]</a>
+                    <h3 onClick = {openArticle}>{article.title}
+                        <a href = "#" onClick = {this.handleDeleteArticle}>[delete]</a>
                     </h3>
                     <p>
                         <time pubdate datetime = {article.date}>
@@ -60,10 +34,31 @@ class Article extends Component {
                     </p>
                 </header>
                 {body}
-                {comments}
             </article>
         )
     }
+
+    getBody() {
+        const { article, isOpen } = this.props
+        if (!isOpen) return null
+        return <section>
+            {article.text}
+            <CommentList article = {article} />
+        </section>
+    }
 }
 
-export default ToggleOpen(Article)
+Article.propTypes = {
+    article: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        text: PropTypes.string,
+        id: PropTypes.string.isRequired,
+        comments: PropTypes.array,
+        date: PropTypes.string.isRequired
+    }),
+    isOpen: PropTypes.bool,
+    openArticle: PropTypes.func.isRequired,
+    options: PropTypes.object
+}
+
+export default Article

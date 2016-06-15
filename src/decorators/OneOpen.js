@@ -1,20 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default (CustomComponent) => class DecoratedComponent extends Component {
-    //хорошо, но не привязывайтесь к Article - декораторы пишуться что б использовать с разными сущностями
-    state = {
-        openedId: null
-    }
+export default (CustomComponent) =>
+    class DecoratedComponent extends React.Component {
+        state = {
+            openedItem: null
+        }
 
-    setOpenId = (id) => () => {
-        this.setState({
-            openedId: id
-        })
-    }
+        openItem = (id) => () => {
+            this.setState({
+                openedItem: this.state.openedItem === id ? null : id
+            })
+        }
 
-    render() {
-        return <CustomComponent {...this.props}
-        openedId = {this.state.openedId}
-        setOpenId = {this.setOpenId}/>
+        isOpen = (id) => this.state.openedItem === id
+
+        render() {
+            return <CustomComponent {...this.props}
+            openItem = {this.openItem}
+            isOpen = {this.isOpen}/>
+        }
     }
-}

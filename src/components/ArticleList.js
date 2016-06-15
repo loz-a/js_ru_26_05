@@ -11,13 +11,7 @@ import 'react-select/dist/react-select.css'
 class ArticleList extends Component {
 
     state = {
-        selected: null
-    }
-
-    static propTypes = {
-        articles:  PropTypes.array.isRequired,
-        openedId:  PropTypes.string,
-        setOpenId: PropTypes.func.isRequired
+        selected: []
     }
 
     componentDidMount() {
@@ -25,44 +19,51 @@ class ArticleList extends Component {
     }
 
     render() {
-        const {
-            articles,
-            openedId = null,
-            setOpenId
-         } = this.props
-
-        if (!articles) return null
-
-        const articleItems = articles.map((article) =>
-            <li key={article.id}>
-                <Article article = {article}
-                    openFlag = {openedId === article.id}
-                    notifyOpenId = {setOpenId(article.id)}
-                />
-            </li>
-        )
-
-        const options = articles.map((article) => ({
-            label: article.title,
-            value: article.id
-        }))
-
+        const articleItems = this.getArticleItems()
+        const select = this.getSelect()
         return (
             <div>
                 <ul>
                     {articleItems}
                 </ul>
-
                 <Chart ref="chart" />
-
-                <Select
-                    options  = {options}
-                    onChange = {this.handleChange}
-                    value    = {this.state.selected}
-                    multi    = {true}
-                />
+                {select}
             </div>
         )
+    }
+
+    getArticleItems = () => {
+        const {
+            articles,
+            isOpen,
+            openItem
+         } = this.props
+
+        if (!articles) return null
+
+        return articles.map((article) =>
+            <li key={article.id}>
+                <Article article = {article}
+                    isOpen = {isOpen(article.id)}
+                    openArticle = {openItem(article.id)}
+                />
+            </li>
+        )
+    }
+
+    getSelect() {
+        const { articles } = this.props
+        const options = articles.map((article) => ({
+            label: article.title,
+            value: article.id
+        }))
+
+        return <Select
+            options  = {options}
+            onChange = {this.handleChange}
+            value    = {this.state.selected}
+            multi    = {true}
+        />
     }
 
     handleChange = (selected) => {
@@ -70,6 +71,12 @@ class ArticleList extends Component {
             selected
         })
     }
+}
+
+ArticleList.propTypes = {
+    articles:  PropTypes.array.isRequired,
+    openItem:  PropTypes.func.isRequired,
+    isOpen:    PropTypes.func.isRequired
 }
 
 export default DateRange(OneOpen(ArticleList))
