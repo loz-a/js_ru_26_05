@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react'
 import CommentList from './CommentList'
-import { deleteArticle } from '../AC/article'
+import { deleteArticle, loadArticleById } from '../AC/article'
 import moment from 'moment'
 
 class Article extends React.Component {
+
+    componentWillReceiveProps({ isOpen, article: { id, text, loading } }) {
+        if (isOpen && !text && !loading) loadArticleById({ id })
+    }
 
     handleDeleteArticle = (evt) => {
         evt.preventDefault()
@@ -41,7 +45,9 @@ class Article extends React.Component {
     getBody() {
         const { article, isOpen } = this.props
         if (!isOpen) return null
+        const loader = article.loading ? <h3>Loading...</h3> : null
         return <section>
+            {loader}
             {article.text}
             <CommentList article = {article} />
         </section>

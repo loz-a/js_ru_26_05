@@ -3,6 +3,7 @@ import {
     ADD_COMMENT,
     DELETE_ARTICLE,
     LOAD_ALL_ARTICLES,
+    LOAD_ARTICLE_BY_ID,
     START,
     FAIL,
     SUCCESS
@@ -34,6 +35,13 @@ export default class ArticleStore extends BaseStore {
                     this.error = error
                     this.loading = false
                     break
+                case LOAD_ARTICLE_BY_ID + START:
+                    this.getById(payload.id).loading = true
+                    break
+                case LOAD_ARTICLE_BY_ID + SUCCESS:
+                    this._add(response)
+                    break
+
                 default:
                     return
             }
