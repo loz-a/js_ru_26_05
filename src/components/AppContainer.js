@@ -1,9 +1,18 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import ArticleList from './ArticleList'
 import StoreSubscription from '../decorators/StoreSubscription'
+import { loadAllArticles } from '../AC/article'
 
-function AppContainer(props) {
-    return <ArticleList articles = {props.articles} />
+
+class AppContainer extends React.Component {
+
+    componentDidMount() {
+        loadAllArticles()
+    }
+
+    render() {
+        return <ArticleList articles = {this.props.articles} />
+    }
 }
 
 function getState(stores) {
