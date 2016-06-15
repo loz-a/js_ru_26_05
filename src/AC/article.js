@@ -11,11 +11,3 @@ export function deleteArticle(id) {
     }
     AppDispatcher.dispatch(action)
 }
-
-export function notifyArticleAboutNewComment(articleId) {
-    const action = {
-        type: NOTIFY_ARTICLE_ABOUT_NEW_COMMENT,
-        payload: { id: articleId }
-    }
-    AppDispatcher.dispatch(action)
-}

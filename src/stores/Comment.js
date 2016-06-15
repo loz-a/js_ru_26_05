@@ -10,7 +10,8 @@ export default class CommentStore extends BaseStore {
 
             switch (type) {
                 case ADD_COMMENT:
-                    this._add(payload)
+                    const item = this._add(payload)
+                    payload.id = item.id
                     break;
                 default:
                     return
@@ -23,7 +24,7 @@ export default class CommentStore extends BaseStore {
     _add(item) {
         let newItem = Object.assign({}, item)
         if (newItem.id === undefined) newItem.id = this._getNewItemId()
-        super._add(newItem);
+        return super._add(newItem);
     }
 
     _getNewItemId() {

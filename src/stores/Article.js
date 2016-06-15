@@ -1,6 +1,6 @@
 import BaseStore from './BaseStore'
 import {
-    NOTIFY_ARTICLE_ABOUT_NEW_COMMENT,
+    ADD_COMMENT,
     DELETE_ARTICLE
 } from '../constants'
 
@@ -15,9 +15,9 @@ export default class ArticleStore extends BaseStore {
                 case DELETE_ARTICLE:
                     this._delete(payload.id)
                     break;
-                //Незачем разбивать на 2 экшина, стоит использовать ADD_COMMENT
-                case NOTIFY_ARTICLE_ABOUT_NEW_COMMENT:
-                    this._addCommentByArticleId(payload.id)
+                case ADD_COMMENT:
+                    this._waitFor(['comments'])
+                    this._addComment(payload)
                 default:
                     return
             }
@@ -26,12 +26,10 @@ export default class ArticleStore extends BaseStore {
         })
     }
 
-    _addCommentByArticleId(articleId) {
-        const article = this.getById(articleId)
+    _addComment(comment) {
+        const article = this.getById(comment.articleId)
         if (article) {
-            //можно, но опасно. Если поменяется логика генерации id - будете ловить баги
-            const comments = this.getStoreByName('comments').getAll()
-            article.comments.push(Math.max(...Object.keys(comments)))
+            article.comments.push(comment.id)
         }
     }
 }

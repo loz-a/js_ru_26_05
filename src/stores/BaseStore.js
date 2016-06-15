@@ -14,7 +14,12 @@ export default class BaseStore extends EventEmitter {
     }
 
     _subscribe(callback) {
-        AppDispatcher.register(callback)
+        this.dispatchToken = AppDispatcher.register(callback)
+    }
+
+    _waitFor(storeNames = []) {
+        const tokens = storeNames.map((name) => this.getStoreByName(name).dispatchToken)
+        AppDispatcher.waitFor(tokens)
     }
 
     getAll = () => {
@@ -30,7 +35,7 @@ export default class BaseStore extends EventEmitter {
     }
 
     _add(item) {
-        this._items[item.id] = new DataWrapper(item, this)
+        return this._items[item.id] = new DataWrapper(item, this)
     }
 
     _delete(id) {

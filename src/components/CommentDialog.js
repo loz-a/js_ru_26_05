@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { addComment } from '../AC/comment'
-import { notifyArticleAboutNewComment } from '../AC/article'
 
 class CommentDialog extends Component {
 
@@ -16,7 +15,6 @@ class CommentDialog extends Component {
         const { name, text } = this.state
 
         addComment(name, text, articleId)
-        notifyArticleAboutNewComment(articleId)
 
         this.setState({
             name: '',

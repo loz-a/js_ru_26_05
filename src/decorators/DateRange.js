@@ -1,10 +1,10 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import moment from 'moment'
 
 import 'react-day-picker/lib/style.css'
 
-export default (CustomComponent) => class DecoratedComponent extends Component {
+export default (CustomComponent) => class DecoratedComponent extends React.Component {
 
     state = {
         from: null,
