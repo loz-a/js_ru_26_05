@@ -14,7 +14,7 @@ export default (storeNames, getStateFromStores) => {
             this.setState(getStateFromStores(stores, nextProps))
         }
 
-        componentDidMount() {
+        componentWillMount() {
             storeNames
                 .forEach((name) => stores[name].addChangeListener(this.handleStoresChange))
         }
