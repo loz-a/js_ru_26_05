@@ -4,25 +4,21 @@ export default (CustomComponent) => class DecoratedComponent extends Component {
 
     constructor(props) {
         super(props)
-        const { openFlag = false } = props
-        this.state = { openFlag }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const { openFlag } = nextProps
-        this.setState({ openFlag })
+        this.state = {
+            isOpen: false
+        }
     }
 
     toggleOpen = (evt) => {
         if (evt && evt.preventDefault) evt.preventDefault()
         this.setState({
-            openFlag: !this.state.openFlag
+            isOpen: !this.state.isOpen
         })
     }
 
     render() {
         return <CustomComponent {...this.props}
-            openFlag = {this.state.openFlag}
+            isOpen = {this.state.isOpen}
             toggleOpen = {this.toggleOpen} />
     }
 }

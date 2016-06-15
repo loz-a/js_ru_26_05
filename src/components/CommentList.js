@@ -5,39 +5,54 @@ import CommentDialog from './CommentDialog'
 
 class CommentList extends Component {
 
-    static propTypes = {
-        comments: PropTypes.array,
-        openFlag: PropTypes.bool,
-        toggleOpen: PropTypes.func.isRequired,
-        articleId: PropTypes.string.isRequired
-    }
-
     render() {
         const {
-            comments,
-            openFlag,
-            toggleOpen,
-            articleId
+            article,
+            isOpen,
+            toggleOpen
         } = this.props
 
-        if (!comments) return null
+        const commentsData = article.getRelation('comments')
+        if (!commentsData) return null
 
-        const commentItems = !openFlag ? null : comments.map((comment) => <Comment key={comment.id} comment={comment} />)
-        const visibilityTitle   = !openFlag ? 'Show' : 'Hide'
+        const togglerLink = this.getTogglerLink(commentsData)
+        const comments = this.getList(commentsData)
 
         return (
             <section>
                 <h4>
-                    <a href="#" onClick={toggleOpen}>{visibilityTitle} {comments.length} comments</a>:
+                    {togglerLink}
                  </h4>
-                {commentItems}
+                {comments}
                 <CommentDialog
-                    articleId = {articleId}
+                    articleId = {article.id}
                     toggleOpen = {toggleOpen}
-                    openFlag = {openFlag} />
+                    isOpen = {isOpen} />
             </section>
         )
     }
+
+    getTogglerLink(commentsData) {
+        const { isOpen, toggleOpen } = this.props
+        const visibilityText = isOpen ? 'Hide' : 'Show'
+        return <a href="#" onClick={toggleOpen}>{visibilityText} {commentsData.length} comments</a>
+    }
+
+    getList(commentsData) {
+        const { isOpen } = this.props
+        if (!isOpen) return null
+
+        const items = commentsData.map((comment) =>
+            <Comment key={comment.id} comment={comment} />
+        )
+        return <div>{items}</div>
+    }
+}
+
+CommentList.propTypes = {
+    article: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool,
+    toggleOpen: PropTypes.func.isRequired
 }
 
 export default ToggleOpen(CommentList)

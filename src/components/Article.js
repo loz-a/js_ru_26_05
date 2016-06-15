@@ -53,7 +53,6 @@ Article.propTypes = {
         title: PropTypes.string.isRequired,
         text: PropTypes.string,
         id: PropTypes.string.isRequired,
-        comments: PropTypes.array,
         date: PropTypes.string.isRequired
     }),
     isOpen: PropTypes.bool,
