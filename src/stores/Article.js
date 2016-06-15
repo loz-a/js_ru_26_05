@@ -2,9 +2,10 @@ import BaseStore from './BaseStore'
 import {
     ADD_COMMENT,
     DELETE_ARTICLE,
-    LOAD_ALL_ARTICLES_START,
-    LOAD_ALL_ARTICLES_START,
-    LOAD_ALL_ARTICLES_SUCCESS
+    LOAD_ALL_ARTICLES,
+    START,
+    FAIL,
+    SUCCESS
 } from '../constants'
 
 export default class ArticleStore extends BaseStore {
@@ -22,14 +23,14 @@ export default class ArticleStore extends BaseStore {
                     this._waitFor(['comments'])
                     this._addComment(payload)
                     break
-                case LOAD_ALL_ARTICLES_START:
+                case LOAD_ALL_ARTICLES + START:
                     this.loading = true
                     break
-                case LOAD_ALL_ARTICLES_SUCCESS:
+                case LOAD_ALL_ARTICLES + SUCCESS:
                     response.forEach(this._add)
                     this.loading = false
                     break
-                case LOAD_ALL_ARTICLES_FAIL:
+                case LOAD_ALL_ARTICLES + FAIL:
                     this.error = error
                     this.loading = false
                     break

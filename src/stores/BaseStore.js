@@ -34,11 +34,11 @@ export default class BaseStore extends EventEmitter {
         return this._stores[name]
     }
 
-    _add(item) {
+    _add = (item) => {
         return this._items[item.id] = new DataWrapper(item, this)
     }
 
-    _delete(id) {
+    _delete = (id) => {
         delete this._items[id]
     }
 
