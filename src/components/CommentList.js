@@ -24,10 +24,7 @@ class CommentList extends Component {
                     {togglerLink}
                  </h4>
                 {comments}
-                <CommentDialog
-                    articleId = {article.id}
-                    toggleOpen = {toggleOpen}
-                    isOpen = {isOpen} />
+                <CommentDialog articleId = {article.id} />
             </section>
         )
     }

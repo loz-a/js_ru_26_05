@@ -4,36 +4,30 @@ import { notifyArticleAboutNewComment } from '../AC/article'
 
 class CommentDialog extends Component {
 
-    static propTypes = {
-        articleId: PropTypes.string.isRequired,
-        toggleOpen: PropTypes.func.isRequired,
-        openFlag: PropTypes.bool
+    state = {
+        name: '',
+        text: ''
     }
 
     handleSubmit = (evt) => {
         evt.preventDefault()
 
         const { articleId } = this.props
+        const { name, text } = this.state
 
-        addComment(this._name.value, this._text.value, articleId)
+        addComment(name, text, articleId)
         notifyArticleAboutNewComment(articleId)
+
+        this.setState({
+            name: '',
+            text: ''
+        })
     }
 
-    resetForm = () => {
-        this._name.value = ''
-        this._text.value = ''
-    }
-
-    componentDidUpdate(prevProps) {
-        const {
-            toggleOpen,
-            openFlag = false
-        } = prevProps
-
-        const isFormNotEmpty = this._name.value.length || this._name.value.length
-
-         if (isFormNotEmpty && openFlag) toggleOpen() // tried to add comment and comment list was open
-         this.resetForm()
+    handleChange = (input) => (evt) => {
+        this.setState({
+            [input]: evt.target.value
+        })
     }
 
     render() {
@@ -43,13 +37,15 @@ class CommentDialog extends Component {
                     <input
                         name = "name"
                         placeholder = "Author"
-                        ref = {(ref) => this._name = ref} />
+                        value = {this.state.name}
+                        onChange = {this.handleChange('name')} />
                 </p>
                 <p>
                     <textarea
                         name = "text"
                         placeholder = "Write comment here..."
-                        ref = {(ref) => this._text = ref} />
+                        value = {this.state.text}
+                        onChange = {this.handleChange('text')} />
                 </p>
                 <p>
                     <input type="submit" defaultValue="Ok" />
@@ -57,6 +53,10 @@ class CommentDialog extends Component {
             </form>
         )
     }
+}
+
+CommentDialog.propTypes = {
+    articleId: PropTypes.string.isRequired
 }
 
 export default CommentDialog
