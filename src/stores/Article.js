@@ -1,7 +1,10 @@
 import BaseStore from './BaseStore'
 import {
     ADD_COMMENT,
-    DELETE_ARTICLE
+    DELETE_ARTICLE,
+    LOAD_ALL_ARTICLES_START,
+    LOAD_ALL_ARTICLES_START,
+    LOAD_ALL_ARTICLES_SUCCESS
 } from '../constants'
 
 export default class ArticleStore extends BaseStore {
@@ -9,7 +12,7 @@ export default class ArticleStore extends BaseStore {
         super(...args)
 
         this._subscribe((action) => {
-            const { type, payload } = action
+            const { type, payload, response, error } = action
 
             switch (type) {
                 case DELETE_ARTICLE:
@@ -18,6 +21,18 @@ export default class ArticleStore extends BaseStore {
                 case ADD_COMMENT:
                     this._waitFor(['comments'])
                     this._addComment(payload)
+                    break
+                case LOAD_ALL_ARTICLES_START:
+                    this.loading = true
+                    break
+                case LOAD_ALL_ARTICLES_SUCCESS:
+                    response.forEach(this._add)
+                    this.loading = false
+                    break
+                case LOAD_ALL_ARTICLES_FAIL:
+                    this.error = error
+                    this.loading = false
+                    break
                 default:
                     return
             }
