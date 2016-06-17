@@ -2,8 +2,17 @@ import React, { PropTypes, Component } from 'react'
 import ToggleOpen from '../decorators/ToggleOpen'
 import Comment from './Comment'
 import CommentDialog from './CommentDialog'
+import { loadCommentsByArticleId } from '../AC/comment'
 
 class CommentList extends Component {
+
+    componentWillReceiveProps({ isOpen, article }) {
+        if (isOpen
+            && !article.getRelation('comments').length
+            && !article.loadingComments) {
+            loadCommentsByArticleId(article)
+        }
+    }
 
     render() {
         const {
@@ -12,11 +21,13 @@ class CommentList extends Component {
             toggleOpen
         } = this.props
 
-        const commentsData = article.getRelation('comments')
-        if (!commentsData) return null
+        const commentsCount = article.comments.length
 
-        const togglerLink = this.getTogglerLink(commentsData)
-        const comments = this.getList(commentsData)
+        if (!commentsCount) return null
+
+        const togglerLink = this.getTogglerLink(commentsCount)
+        const comments = this.getList(article)
+
 
         return (
             <section>
@@ -29,17 +40,20 @@ class CommentList extends Component {
         )
     }
 
-    getTogglerLink(commentsData) {
+    getTogglerLink(commentsCount) {
         const { isOpen, toggleOpen } = this.props
         const visibilityText = isOpen ? 'Hide' : 'Show'
-        return <a href="#" onClick={toggleOpen}>{visibilityText} {commentsData.length} comments</a>
+        return <a href="#" onClick={toggleOpen}>{visibilityText} {commentsCount} comments</a>
     }
 
-    getList(commentsData) {
+    getList(article) {
         const { isOpen } = this.props
         if (!isOpen) return null
 
-        const items = commentsData.map((comment) =>
+        if (article.loadingComments) return <h3>Loading comments...</h3>
+
+        const comments = article.getRelation('comments')
+        const items = comments.map((comment) =>
             <Comment key={comment.id} comment={comment} />
         )
         return <div>{items}</div>

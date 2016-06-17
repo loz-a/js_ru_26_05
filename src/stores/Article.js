@@ -4,6 +4,7 @@ import {
     DELETE_ARTICLE,
     LOAD_ALL_ARTICLES,
     LOAD_ARTICLE_BY_ID,
+    LOAD_COMMENTS_BY_ARTICLE_ID,
     START,
     FAIL,
     SUCCESS
@@ -41,7 +42,17 @@ export default class ArticleStore extends BaseStore {
                 case LOAD_ARTICLE_BY_ID + SUCCESS:
                     this._add(response)
                     break
-
+                case LOAD_COMMENTS_BY_ARTICLE_ID + START:
+                    this.getById(payload.id).loadingComments = true
+                    break
+                case LOAD_COMMENTS_BY_ARTICLE_ID + SUCCESS:
+                    this._waitFor(['comments'])
+                    this.getById(payload.id).loadingComments = false
+                    break
+                case LOAD_COMMENTS_BY_ARTICLE_ID + FAIL:
+                    this.error = error
+                    this.getById(payload.id).loadingComments = false
+                    break
                 default:
                     return
             }

@@ -1,18 +1,25 @@
 import BaseStore from './BaseStore'
-import { ADD_COMMENT } from '../constants'
+import {
+    ADD_COMMENT,
+    LOAD_COMMENTS_BY_ARTICLE_ID,
+    SUCCESS
+} from '../constants'
 
 export default class CommentStore extends BaseStore {
     constructor(...args) {
         super(...args)
 
         this._subscribe((action) => {
-            const { type, payload } = action
+            const { type, payload, response, error } = action
 
             switch (type) {
                 case ADD_COMMENT:
                     const item = this._add(payload)
                     payload.id = item.id
                     break;
+                case LOAD_COMMENTS_BY_ARTICLE_ID + SUCCESS:
+                    response.forEach(this._add)
+                    break
                 default:
                     return
             }

@@ -6,6 +6,12 @@ export default class DataWrapper {
 
     getRelation(relation) {
         const relStore = this._store.getStoreByName(relation)
-        return this[relation].map(relStore.getById)
+
+        const result = [];
+        for (let id in this[relation]) {
+            let item = relStore.getById(id)
+            if (item !== undefined) result.push(item)
+        }
+        return result        
     }
 }
