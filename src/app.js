@@ -12,7 +12,7 @@ function wrappedIncrement(...args) {
 
 function renderComponent() {
     render(
-        <AppContainer count = {store.getState()} increment = {wrappedIncrement} />,
+        <AppContainer count = {store.getState().count} increment = {wrappedIncrement} />,
         document.getElementById('container')
     )
 }
