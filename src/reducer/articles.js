@@ -4,7 +4,7 @@ export default (articles = {}, action) => {
     const { type, payload, response, error } = action
 
     switch (type) {
-        case expression:
+        case '':
 
             break;
         default:

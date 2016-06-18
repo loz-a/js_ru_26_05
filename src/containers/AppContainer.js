@@ -1,25 +1,21 @@
 import React, { PropTypes } from 'react'
+import { Provider } from 'react-redux'
+import Counter from './Counter'
 
 class AppContainer extends React.Component {
 
     static propTypes = {
-        count: PropTypes.number,
-        increment: PropTypes.func
+        store: PropTypes.object
     }
 
     render() {
-        const { count } = this.props
         return (
-            <div>
-                <h1>{count}</h1>
-                <a href = "#" onClick = {this.handleClick}>Increment me</a>
-            </div>
+            <Provider store = {this.props.store}>
+                <div>
+                    <Counter />
+                </div>
+            </Provider>
         )
-    }
-
-    handleClick = (evt) => {
-        evt.preventDefault()
-        this.props.increment()
     }
 }
 
