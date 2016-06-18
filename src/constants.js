@@ -9,3 +9,5 @@ export const LOAD_COMMENTS_BY_ARTICLE_ID = 'LOAD_COMMENTS_BY_ARTICLE_ID'
 export const START = '_START'
 export const FAIL = '_FAIL'
 export const SUCCESS = '_SUCCESS'
+
+export const  INCREMENT = 'INCREMENT'
