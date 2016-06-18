@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import Counter from './Counter'
+import ArticleList from './ArticleList'
 
 class AppContainer extends React.Component {
 
@@ -13,6 +14,7 @@ class AppContainer extends React.Component {
             <Provider store = {this.props.store}>
                 <div>
                     <Counter />
+                    <ArticleList />
                 </div>
             </Provider>
         )
