@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import counterReducer from './counter'
-import articlesReducer from './articles'
+import counter from './counter'
+import articles from './articles'
+import comments from './comments'
 
 export default combineReducers({
-    count: counterReducer,
-    articles: articlesReducer
+    counter,
+    articles,
+    comments
 })

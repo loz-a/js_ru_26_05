@@ -3,7 +3,6 @@ import ToggleOpen from '../decorators/ToggleOpen'
 import Comment from './Comment'
 import CommentDialog from './CommentDialog'
 // import { loadCommentsByArticleId } from '../AC/comment'
-import { getRelation } from '../store/utils'
 
 class CommentList extends Component {
 
@@ -48,12 +47,11 @@ class CommentList extends Component {
     }
 
     getList(article) {
-        const { isOpen } = this.props
+        const { isOpen, comments } = this.props
         if (!isOpen) return null
 
         if (article.loadingComments) return <h3>Loading comments...</h3>
 
-        const comments = getRelation(article, 'comments')
         const items = comments.map((comment) =>
             <Comment key={comment.id} comment={comment} />
         )
@@ -64,7 +62,14 @@ class CommentList extends Component {
 CommentList.propTypes = {
     article: PropTypes.object.isRequired,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+    toggleOpen: PropTypes.func.isRequired,
+    comments: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired
 }
 
 export default ToggleOpen(CommentList)

@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react'
 
 function Comment(props) {
-    const { comment: {text, user} } = props
+    const { comment: {text, name} } = props
 
     return (
         <article>
             <header>
                 <h5>
-                    Posted By: {user}
+                    Posted By: {name}
                 </h5>
             </header>
             <p>
@@ -19,7 +19,7 @@ function Comment(props) {
 
 Comment.propTypes = {
     comment: PropTypes.shape({
-        user: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired
     })
 }

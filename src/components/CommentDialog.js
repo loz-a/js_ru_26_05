@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import { addComment } from '../AC/comment'
+import { connect } from 'react-redux'
+import { addComment } from '../AC/comments'
 
 class CommentDialog extends Component {
 
@@ -11,7 +12,7 @@ class CommentDialog extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault()
 
-        const { articleId } = this.props
+        const { articleId, addComment } = this.props
         const { name, text } = this.state
 
         addComment(name, text, articleId)
@@ -54,7 +55,11 @@ class CommentDialog extends Component {
 }
 
 CommentDialog.propTypes = {
-    articleId: PropTypes.string.isRequired
+    articleId: PropTypes.string.isRequired,
+    addComment: PropTypes.func.isRequired
 }
 
-export default CommentDialog
+export default connect(
+    null,
+    { addComment }
+)(CommentDialog)
