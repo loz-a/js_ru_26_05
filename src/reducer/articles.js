@@ -14,6 +14,7 @@ export default (articles = normalizedArticles, action) => {
         case ADD_COMMENT:                      
             return articles.map(
                 (article) => {
+                    //плохо - вы мутируете article
                     if (article.id === payload.articleId) article.comments.push(payload.id)
                     return article
                 }
