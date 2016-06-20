@@ -3,10 +3,10 @@ import CommentList from '../components/CommentList'
 import { connect } from 'react-redux'
 import { getRelation } from '../store/utils'
 
-function CommentListContainer() {
+function CommentListContainer(props) {
     return (
-        <CommentList {...this.props}
-            comments = {this.props.comments}/>
+        <CommentList {...props}
+            comments = {props.comments}/>
     )
 }
 

@@ -11,11 +11,15 @@ export default (articles = normalizedArticles, action) => {
                 (article) => article.id !== payload.id
             )
 
-        case ADD_COMMENT:                      
+        case ADD_COMMENT:
             return articles.map(
                 (article) => {
-                    //плохо - вы мутируете article
-                    if (article.id === payload.articleId) article.comments.push(payload.id)
+                    if (article.id === payload.articleId) {
+                        return {
+                            ...article,
+                            comments: [...article.comments, payload.id]
+                        }
+                    }
                     return article
                 }
             )

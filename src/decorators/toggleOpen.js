@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 //decorator === HOC(Higher Order Component)
 export default (CustomComponent) => class DecoratedComponent extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            isOpen: false
-        }
+    state = {
+        isOpen: false
     }
 
     toggleOpen = (evt) => {
