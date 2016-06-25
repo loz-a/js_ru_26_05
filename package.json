@@ -34,6 +34,7 @@
   "dependencies": {
     "events": "^1.1.0",
     "flux": "^2.1.1",
+    "immutable": "^3.8.1",
     "jquery": "^3.0.0",
     "moment": "^2.13.0",
     "moment-range": "^2.2.0",

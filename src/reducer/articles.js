@@ -1,8 +1,9 @@
 import { DELETE_ARTICLE, ADD_COMMENT } from '../constants'
 import { normalizedArticles } from '../fixtures'
 import { fromArray } from '../store/utils'
+import { fromJS } from 'immutable'
 
-export default (articles = fromArray(normalizedArticles), action) => {
+export default (articles = fromJS(fromArray(normalizedArticles)), action) => {
     const { type, payload, randomId, response, error } = action
 
     switch (type) {

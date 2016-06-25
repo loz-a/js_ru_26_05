@@ -1,8 +1,9 @@
 import { ADD_COMMENT } from '../constants'
 import { normalizedComments } from '../fixtures'
 import { fromArray } from '../store/utils'
+import { fromJS } from 'immutable'
 
-export default (comments = fromArray(normalizedComments), action) => {
+export default (comments = fromJS(fromArray(normalizedComments)), action) => {
     const { type, payload, randomId, response, error } = action
 
     switch (type) {

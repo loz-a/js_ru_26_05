@@ -12,5 +12,5 @@ import { toArray } from '../store/utils'
 const ArticleListContainer = ({articles}) => (<ArticleList articles = {articles} />)
 
 export default connect(
-    (state) => ({articles: toArray(state.articles)})
+    (state) => ({articles: toArray(state.articles.toJS())})
 )(ArticleListContainer)
