@@ -3,7 +3,13 @@ import { normalizedComments } from '../fixtures'
 import { fromArray } from '../store/utils'
 import { fromJS } from 'immutable'
 
-export default (comments = fromJS(fromArray(normalizedComments)), action) => {
+const defaultState = fromJS({
+    loading: false,
+    isLoaded: false,
+    entities: fromArray(normalizedComments)
+})
+
+export default (comments = defaultState, action) => {
     const { type, payload, randomId, response, error } = action
 
     switch (type) {

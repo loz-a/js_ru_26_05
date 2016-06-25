@@ -14,11 +14,13 @@ export function loadAllArticles() {
             type: LOAD_ALL_ARTICLES + START
         })
 
-        $.get('/api/article')
+        setTimeout(() => {
+            $.get('/api/article')
             .done((response) => dispatch({
                 type: LOAD_ALL_ARTICLES + SUCCESS,
                 response
             }))
+        }, 1000)
     }
 }
 

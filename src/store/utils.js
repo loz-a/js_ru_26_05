@@ -4,7 +4,7 @@ export function getRelation(entity, relation) {
     const relStore = store.getState()[relation]
     if (!relStore || relStore[relation]) return []
 
-    return entity[relation].map((id) => relStore.get(id.toString()).toJS())
+    return entity[relation].map((id) => relStore.getIn(['entities' , id.toString()]).toJS())
 }
 
 export function fromArray(array) {

@@ -13,11 +13,16 @@ import { loadAllArticles } from '../AC/articles'
 // const ArticleListContainer = ({articles}) => (<ArticleList articles = {articles} />)
 
 class ArticleListContainer extends React.Component {
+
     componentDidMount() {
         this.props.loadAllArticles()
     }
 
     render() {
+        const { articles, loading } = this.props
+
+        if (loading) return <h3>Loading...</h3>
+
         return (
             <ArticleList articles = {this.props.articles} />
         )
@@ -25,6 +30,13 @@ class ArticleListContainer extends React.Component {
 }
 
 export default connect(
-    (state) => ({articles: toArray(state.articles.toJS())}),
+    (state) => {
+        if (!state.articles) return {}
+        console.log(state);
+        return {
+            articles: toArray(state.articles.get('entities').toJS()),
+            loading: state.articles.get('loadeing'),
+            loaded: state.articles.get('loaded')
+        }},
     { loadAllArticles }
 )(ArticleListContainer)
