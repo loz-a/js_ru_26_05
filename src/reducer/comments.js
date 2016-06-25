@@ -6,15 +6,15 @@ export default (comments = fromArray(normalizedComments), action) => {
     const { type, payload, randomId, response, error } = action
 
     switch (type) {
-        case ADD_COMMENT:
-            return [
-                ...comments,
-                {
-                    id: randomId,
-                    name: payload.name,
-                    text: payload.text
-                }
-            ]
+        // case ADD_COMMENT:
+        //     return [
+        //         ...comments,
+        //         {
+        //             id: randomId,
+        //             name: payload.name,
+        //             text: payload.text
+        //         }
+        //     ]
         default:
     }
     return comments
