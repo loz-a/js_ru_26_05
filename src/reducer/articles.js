@@ -1,8 +1,8 @@
 import { DELETE_ARTICLE, ADD_COMMENT } from '../constants'
 import { normalizedArticles } from '../fixtures'
-import comments from './comments'
+import { fromArray } from '../store/utils'
 
-export default (articles = normalizedArticles, action) => {
+export default (articles = fromArray(normalizedArticles), action) => {
     const { type, payload, randomId, response, error } = action
 
     switch (type) {

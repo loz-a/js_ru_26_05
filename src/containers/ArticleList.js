@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import ArticleList from '../components/ArticleList'
 import { connect } from 'react-redux'
+import { toArray } from '../store/utils'
 
 // function ArticleListContainer({articles}) {
 //     return (
@@ -11,5 +12,5 @@ import { connect } from 'react-redux'
 const ArticleListContainer = ({articles}) => (<ArticleList articles = {articles} />)
 
 export default connect(
-    (state) => ({articles: state.articles})
+    (state) => ({articles: toArray(state.articles)})
 )(ArticleListContainer)
