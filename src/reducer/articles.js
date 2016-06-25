@@ -3,7 +3,7 @@ import { normalizedArticles } from '../fixtures'
 import comments from './comments'
 
 export default (articles = normalizedArticles, action) => {
-    const { type, payload, response, error } = action
+    const { type, payload, randomId, response, error } = action
 
     switch (type) {
         case DELETE_ARTICLE:
@@ -17,7 +17,7 @@ export default (articles = normalizedArticles, action) => {
                     if (article.id === payload.articleId) {
                         return {
                             ...article,
-                            comments: [...article.comments, payload.id]
+                            comments: [...article.comments, randomId]
                         }
                     }
                     return article
