@@ -2,9 +2,10 @@ import { createStore, applyMiddleware, compose} from 'redux'
 import reducer from '../reducer'
 import randomId from '../middlewares/randomId'
 import logger from '../middlewares/logger'
+import thunk from 'redux-thunk'
 
 const enhancer = compose(
-    applyMiddleware(randomId, logger),
+    applyMiddleware(thunk, randomId, logger),
     window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 const store = createStore(reducer, {}, enhancer)
