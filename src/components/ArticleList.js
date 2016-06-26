@@ -22,7 +22,7 @@ class ArticleList extends Component {
         const articleItems = this.getArticleItems()
         const select = this.getSelect()
         return (
-            <div>
+            <div>            
                 <ul>
                     {articleItems}
                 </ul>
