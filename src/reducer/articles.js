@@ -1,11 +1,18 @@
-import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, SUCCESS, START } from '../constants'
-import { normalizedArticles } from '../fixtures'
+import {
+    DELETE_ARTICLE,
+    ADD_COMMENT,
+    LOAD_ALL_ARTICLES,
+    LOAD_ARTICLE_BY_ID,
+    SUCCESS,
+    START
+} from '../constants'
+
 import { fromArray } from '../store/utils'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
     loading: false,
-    isLoaded: false,
+    loadingText: false,
     entities: {}
 })
 
@@ -15,18 +22,24 @@ export default (state = defaultState, action) => {
     switch (type) {
         case LOAD_ALL_ARTICLES + START:
             return state.set('loading', true)
+
         case LOAD_ALL_ARTICLES + SUCCESS:
             return state
                 .set('loading', false)
-                .set('loaded', true)
                 .set('entities', fromJS(fromArray(response)))
                 // .update('entities', (entities) => entities.merge(fromArray(response)))
 
+        case  LOAD_ARTICLE_BY_ID + START:
+            return state.set('loadingText', true)
 
-        // case DELETE_ARTICLE:
-        //     return articles.filter(
-        //         (article) => article.id !== payload.id
-        //     )
+        case LOAD_ARTICLE_BY_ID + SUCCESS:
+            return state
+                .set('loadingText', false)                
+                .updateIn(['entities', payload.id], () => fromJS(response))
+
+
+        case DELETE_ARTICLE:
+            return state.deleteIn(['entities', payload.id])
 
         // case ADD_COMMENT:
             // return articles.map(

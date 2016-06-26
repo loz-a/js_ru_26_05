@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import CommentList from '../containers/CommentList'
-import { deleteArticle } from '../AC/articles'
+import { deleteArticle, loadArticleById } from '../AC/articles'
 import moment from 'moment'
 
 class Article extends React.Component {
 
-    // componentWillReceiveProps({ isOpen, article: { id, text, loading } }) {
-    //     if (isOpen && !text && !loading) loadArticleById({ id })
-    // }
+    componentWillReceiveProps({ isOpen, loadingText, article: { id, text } }) {
+        if (isOpen && !text && !loadingText) this.props.loadArticleById(id)
+    }
 
     handleDeleteArticle = (evt) => {
         evt.preventDefault()
@@ -44,9 +44,10 @@ class Article extends React.Component {
     }
 
     getBody() {
-        const { article, isOpen } = this.props
+        const { article, isOpen, loadingText } = this.props
         if (!isOpen) return null
-        const loader = article.loading ? <h3>Loading...</h3> : null
+
+        const loader = loadingText ? <h3>Loading...</h3> : null
         return <section>
             {loader}
             {article.text}
@@ -66,9 +67,10 @@ Article.propTypes = {
     openArticle: PropTypes.func.isRequired,
     deleteArticle: PropTypes.func.isRequired,
     options: PropTypes.object,
+    loadingText: PropTypes.bool.isRequired
 }
 
 export default connect(
     null,
-    { deleteArticle }
+    { deleteArticle, loadArticleById }
 )(Article)

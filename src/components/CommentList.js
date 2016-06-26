@@ -2,17 +2,12 @@ import React, { PropTypes, Component } from 'react'
 import ToggleOpen from '../decorators/ToggleOpen'
 import Comment from './Comment'
 import CommentDialog from './CommentDialog'
-// import { loadCommentsByArticleId } from '../AC/comment'
 
 class CommentList extends Component {
 
-    // componentWillReceiveProps({ isOpen, article }) {
-    //     if (isOpen
-    //         && !getRelation(article, 'comments').length
-    //         && !article.loadingComments) {
-    //         loadCommentsByArticleId(article)
-    //     }
-    // }
+    componentWillReceiveProps({ isOpen, loading, loaded, loadAllComments }) {
+        if (isOpen && !loading && !loaded) loadAllComments()
+    }
 
     render() {
         const {
@@ -47,13 +42,17 @@ class CommentList extends Component {
     }
 
     getList(article) {
-        const { isOpen, comments } = this.props
+        const { isOpen, comments, loading } = this.props
         if (!isOpen) return null
 
-        if (article.loadingComments) return <h3>Loading comments...</h3>
+        if (loading) return <h3>Loading comments...</h3>
 
-        const items = comments.map((comment) =>
-            <Comment key={comment.id} comment={comment} />
+        if (!comments) return null
+
+        const items = comments.map((comment) => {
+            console.log(comment);
+            return (<Comment key={comment.id} comment={comment} />)
+        }
         )
         return <div>{items}</div>
     }
@@ -61,15 +60,17 @@ class CommentList extends Component {
 
 CommentList.propTypes = {
     article: PropTypes.object.isRequired,
+    loadAllComments: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func.isRequired,
     comments: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
+            user: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired
         }).isRequired
-    ).isRequired
+    )
 }
 
 export default ToggleOpen(CommentList)

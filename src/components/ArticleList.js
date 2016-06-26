@@ -22,7 +22,7 @@ class ArticleList extends Component {
         const articleItems = this.getArticleItems()
         const select = this.getSelect()
         return (
-            <div>            
+            <div>
                 <ul>
                     {articleItems}
                 </ul>
@@ -36,7 +36,8 @@ class ArticleList extends Component {
         const {
             articles,
             isOpen,
-            openItem
+            openItem,
+            loadingText
          } = this.props
 
         if (!articles) return null
@@ -46,6 +47,7 @@ class ArticleList extends Component {
                 <Article article = {article}
                     isOpen = {isOpen(article.id)}
                     openArticle = {openItem(article.id)}
+                    loadingText = {loadingText}
                 />
             </li>
         )
@@ -76,7 +78,8 @@ class ArticleList extends Component {
 ArticleList.propTypes = {
     articles:  PropTypes.array.isRequired,
     openItem:  PropTypes.func.isRequired,
-    isOpen:    PropTypes.func.isRequired
+    isOpen:    PropTypes.func.isRequired,
+    loadingText: PropTypes.bool.isRequired
 }
 
 export default DateRange(OneOpen(ArticleList))

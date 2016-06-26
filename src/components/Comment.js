@@ -18,12 +18,12 @@ import React, { PropTypes } from 'react'
 // }
 
 let Comment = ({
-    comment: {text, name}
+    comment: {text, user}
 }) => (
     <article>
         <header>
             <h5>
-                Posted By: {name}
+                Posted By: {user}
             </h5>
         </header>
         <p>
@@ -34,7 +34,7 @@ let Comment = ({
 
 Comment.propTypes = {
     comment: PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        user: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired
     })
 }
