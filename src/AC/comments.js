@@ -19,14 +19,13 @@ export function loadAllComments() {
     }
 }
 
-export function addComment(name, text, articleId) {
+export function addComment(user, text, articleId) {
     return {
-        type: ADD_COMMENT,
-        payload: {
-            name,
-            text,
-            articleId
-        },
-        withRandomId: true
+        types: [
+            ADD_COMMENT + START,
+            ADD_COMMENT + SUCCESS,
+            ADD_COMMENT + FAIL,
+        ],
+        callAPI: () => $.post('/api/comment', {user, text})
     }
 }

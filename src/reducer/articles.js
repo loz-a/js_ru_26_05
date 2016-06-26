@@ -34,14 +34,15 @@ export default (state = defaultState, action) => {
 
         case LOAD_ARTICLE_BY_ID + SUCCESS:
             return state
-                .set('loadingText', false)                
+                .set('loadingText', false)
                 .updateIn(['entities', payload.id], () => fromJS(response))
 
 
         case DELETE_ARTICLE:
             return state.deleteIn(['entities', payload.id])
 
-        // case ADD_COMMENT:
+        case ADD_COMMENT:
+            return state.setIn(['entities', 'comments'], fromJS(response))
             // return articles.map(
             //     (article) => {
             //         if (article.id === payload.articleId) {
@@ -53,6 +54,7 @@ export default (state = defaultState, action) => {
             //         return article
             //     }
             // )
+
         default:
     }
     return state

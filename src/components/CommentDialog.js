@@ -5,7 +5,7 @@ import { addComment } from '../AC/comments'
 class CommentDialog extends Component {
 
     state = {
-        name: '',
+        user: '',
         text: ''
     }
 
@@ -13,12 +13,12 @@ class CommentDialog extends Component {
         evt.preventDefault()
 
         const { articleId, addComment } = this.props
-        const { name, text } = this.state
+        const { user, text } = this.state
 
-        addComment(name, text, articleId)
+        addComment(user, text, articleId)
 
         this.setState({
-            name: '',
+            user: '',
             text: ''
         })
     }
@@ -34,10 +34,10 @@ class CommentDialog extends Component {
             <form onSubmit = {this.handleSubmit}>
                 <p>
                     <input
-                        name = "name"
+                        name = "user"
                         placeholder = "Author"
-                        value = {this.state.name}
-                        onChange = {this.handleChange('name')} />
+                        value = {this.state.user}
+                        onChange = {this.handleChange('user')} />
                 </p>
                 <p>
                     <textarea

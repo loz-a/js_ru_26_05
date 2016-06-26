@@ -49,10 +49,8 @@ class CommentList extends Component {
 
         if (!comments) return null
 
-        const items = comments.map((comment) => {
-            console.log(comment);
-            return (<Comment key={comment.id} comment={comment} />)
-        }
+        const items = comments.map(
+            (comment) => (<Comment key={comment.id} comment={comment} />)
         )
         return <div>{items}</div>
     }

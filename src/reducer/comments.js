@@ -18,7 +18,7 @@ export default (state = defaultState, action) => {
     const { type, payload, response, error } = action
 
     switch (type) {
-        case LOAD_All_COMMENTS + START:        
+        case LOAD_All_COMMENTS + START:
             return state
                 .set('loading', true)
                 .set('loaded', false)
@@ -29,15 +29,9 @@ export default (state = defaultState, action) => {
                 .set('loaded', true)
                 .set('entities', fromJS(fromArray(response.records)))
 
-        // case ADD_COMMENT:
-        //     return [
-        //         ...comments,
-        //         {
-        //             id: randomId,
-        //             name: payload.name,
-        //             text: payload.text
-        //         }
-        //     ]
+        case ADD_COMMENT + SUCCESS:
+            return state.setIn(['entities'], fromJS(response))
+
         default:
     }
     return state
