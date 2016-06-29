@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import Counter from './Counter'
-import ArticleList from './ArticleList'
+import store from '../store'
 
 class AppContainer extends React.Component {
 
@@ -10,7 +9,7 @@ class AppContainer extends React.Component {
     }
 
     getChildContext() {
-        console.info('call getChildContext')        
+        console.info('call getChildContext')
         return {
             user: this.state.user
         }
@@ -18,13 +17,12 @@ class AppContainer extends React.Component {
 
     render() {
         return (
-            <Provider store = {this.props.store}>
+            <Provider store = {store}>
                 <div>
                     <form onSubmit={this.handleSubmit}>
                         username: <input value={this.state.user} onChange={this.handleChange} />
                     </form>
-                    <Counter />
-                    <ArticleList />
+                    {this.props.children}
                 </div>
             </Provider>
         )
@@ -37,10 +35,6 @@ class AppContainer extends React.Component {
     }
 
     handleSubmit = (evt) => { evt.preventDefault() }
-}
-
-AppContainer.propTypes = {
-    store: PropTypes.object
 }
 
 AppContainer.childContextTypes = {
