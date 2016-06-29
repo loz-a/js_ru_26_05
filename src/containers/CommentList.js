@@ -11,19 +11,33 @@ import { getRelation } from '../store/utils'
 //     )
 // }
 
-const CommentListContainer = (props) =>
-    (<CommentList
-        article = {props.article}
-        loadAllComments = {props.loadAllComments}
-        loading = {props.loading}
-        loaded = {props.loaded}
-        comments = {props.comments} />)
+class CommentListContainer extends React.Component {
+
+    componentDidMount() {
+        this.props.loadAllComments()
+    }
+
+    render() {
+        const { article, loadAllComments, loading, loaded, comments } = this.props
+
+        return (
+            <CommentList
+                article = {article}
+                loadAllComments = {loadAllComments}
+                loading = {loading}
+                loaded = {loaded}
+                comments = {comments} />
+        )
+    }
+}
 
 export default connect(
-    (state, ownProps) => ({
-        comments: getRelation(ownProps.article, 'comments'),
-        loading: state.comments.get('loading'),
-        loaded: state.comments.get('loaded')
-    }),
+    (state, ownProps) => {
+        return {
+            comments: getRelation(state, ownProps.article, 'comments'),
+            loading: state.comments.get('loading'),
+            loaded: state.comments.get('loaded')
+        }
+    },
     { loadAllComments }
 )(CommentListContainer)

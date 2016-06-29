@@ -15,7 +15,7 @@ const defaultState = fromJS({
 })
 
 export default (state = defaultState, action) => {
-    const { type, payload, response, error } = action
+    const { type, payload, response, error, randomId } = action
 
     switch (type) {
         case LOAD_All_COMMENTS + START:
@@ -29,8 +29,14 @@ export default (state = defaultState, action) => {
                 .set('loaded', true)
                 .set('entities', fromJS(fromArray(response.records)))
 
-        case ADD_COMMENT + SUCCESS:
-            return state.setIn(['entities'], fromJS(response))
+        // case ADD_COMMENT + SUCCESS:
+        //     return state.update(['entities'], (entities) => entities.merge(fromJs(fromArray(response))))
+
+        case ADD_COMMENT:
+            return state.setIn(
+                ['entities', randomId.toString()],
+                fromJS({...payload, id: randomId})
+            )
 
         default:
     }

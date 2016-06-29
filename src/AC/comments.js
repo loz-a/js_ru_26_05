@@ -20,12 +20,27 @@ export function loadAllComments() {
 }
 
 export function addComment(user, text, articleId) {
+    // return {
+    //     types: [
+    //         ADD_COMMENT + START,
+    //         ADD_COMMENT + SUCCESS,
+    //         ADD_COMMENT + FAIL,
+    //     ],
+    //     // callAPI: () => $.post('/api/comment', JSON.stringify({user, text}))
+    //     callAPI: () => $.ajax({
+    //           url: 'http://localhost:8080/api/comment',
+    //           type: "POST",
+    //           data: {user, text, article: articleId},
+    //           dataType: 'json',
+    //           headers: {
+    //               "Access-Control-Allow-Origin": "*"
+    //           }
+    //         })
+    // }
+
     return {
-        types: [
-            ADD_COMMENT + START,
-            ADD_COMMENT + SUCCESS,
-            ADD_COMMENT + FAIL,
-        ],
-        callAPI: () => $.post('/api/comment', {user, text})
+        type: ADD_COMMENT,
+        payload: {user, text, articleId},
+        withRandomId: true
     }
 }

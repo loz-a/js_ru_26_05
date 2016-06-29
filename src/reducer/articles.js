@@ -8,7 +8,7 @@ import {
 } from '../constants'
 
 import { fromArray } from '../store/utils'
-import { fromJS } from 'immutable'
+import { fromJS, List } from 'immutable'
 
 const defaultState = fromJS({
     loading: false,
@@ -42,7 +42,7 @@ export default (state = defaultState, action) => {
             return state.deleteIn(['entities', payload.id])
 
         case ADD_COMMENT:
-            return state.setIn(['entities', 'comments'], fromJS(response))
+            //return state.setIn(['entities', 'comments'], fromJS(response))
             // return articles.map(
             //     (article) => {
             //         if (article.id === payload.articleId) {
@@ -54,6 +54,12 @@ export default (state = defaultState, action) => {
             //         return article
             //     }
             // )
+            return state
+                .updateIn(
+                    ['entities', payload.articleId, 'comments'],
+                    new List([]),
+                    (comments) => comments.push(randomId)
+                )
 
         default:
     }

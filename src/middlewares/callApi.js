@@ -3,7 +3,8 @@ export default ({dispatch, getState}) => (next) => (action) => {
         types,
         callAPI,
         shouldCallApi = () => true,
-        payload = {}
+        payload = {},
+        ...rest
     } = action
 
     if (!types) return next(action)
@@ -21,11 +22,14 @@ export default ({dispatch, getState}) => (next) => (action) => {
 
     const [typeStart, typeSuccess, typeFailure] = types
 
-    dispatch({payload, type: typeStart})
+    next({...rest, payload, callAPI, type: typeStart})
 
-    return callAPI().then(
-        (response) => dispatch({payload, response, type: typeSuccess}),
-        (error) => dispatch({payload, error, type: typeFailure})
-    )
-
+    setTimeout(() => {
+        callAPI().then(
+            (response) => {
+                debugger
+                next({...rest, payload, callAPI, response, type: typeSuccess})
+            },
+            (error) => next({...rest, payload, callAPI, error, type: typeFailure}))
+    }, 1000)
 }

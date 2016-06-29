@@ -5,20 +5,22 @@ import { addComment } from '../AC/comments'
 class CommentDialog extends Component {
 
     state = {
-        user: '',
         text: ''
     }
 
     handleSubmit = (evt) => {
         evt.preventDefault()
-
         const { articleId, addComment } = this.props
-        const { user, text } = this.state
+        console.log('==CommentDialog handleSubmit context', this.context.user);
 
-        addComment(user, text, articleId)
+        
+        addComment(
+            this.context.user,
+            this.state.text,
+            articleId
+        )
 
         this.setState({
-            user: '',
             text: ''
         })
     }
@@ -30,15 +32,16 @@ class CommentDialog extends Component {
     }
 
     render() {
+        console.log('==CommentDialog render context', this.context.user);
         return (
             <form onSubmit = {this.handleSubmit}>
-                <p>
+                {/*<p>
                     <input
                         name = "user"
                         placeholder = "Author"
                         value = {this.state.user}
                         onChange = {this.handleChange('user')} />
-                </p>
+                </p>*/}
                 <p>
                     <textarea
                         name = "text"
@@ -57,6 +60,10 @@ class CommentDialog extends Component {
 CommentDialog.propTypes = {
     articleId: PropTypes.string.isRequired,
     addComment: PropTypes.func.isRequired
+}
+
+CommentDialog.contextTypes = {
+    user: PropTypes.string
 }
 
 export default connect(

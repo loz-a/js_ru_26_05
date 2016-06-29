@@ -5,15 +5,18 @@ import CommentDialog from './CommentDialog'
 
 class CommentList extends Component {
 
-    componentWillReceiveProps({ isOpen, loading, loaded, loadAllComments }) {
-        if (isOpen && !loading && !loaded) loadAllComments()
-    }
+    // componentWillReceiveProps({ isOpen, loading, loaded, loadAllComments }) {
+    //     if (isOpen && !loading && !loaded) loadAllComments()
+    // }
 
     render() {
+        console.log('CommentList context ', this.context.user)
         const {
             article,
             isOpen,
-            toggleOpen
+            toggleOpen,
+            loaded,
+            loadAllComments
         } = this.props
 
         const commentsCount = article.comments.length
@@ -23,14 +26,16 @@ class CommentList extends Component {
         const togglerLink = this.getTogglerLink(commentsCount)
         const comments = this.getList(article)
 
-
         return (
             <section>
                 <h4>
                     {togglerLink}
                  </h4>
                 {comments}
-                <CommentDialog articleId = {article.id} />
+                <CommentDialog
+                    articleId = {article.id}
+                    comentsLoaded = {loaded}
+                    loadAllComments = {loadAllComments} />
             </section>
         )
     }
@@ -56,19 +61,23 @@ class CommentList extends Component {
     }
 }
 
+CommentList.contextTypes = {
+    user: PropTypes.string
+}
+
 CommentList.propTypes = {
     article: PropTypes.object.isRequired,
     loadAllComments: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func.isRequired,
-    comments: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            user: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
-        }).isRequired
-    )
+    // comments: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         id: PropTypes.number.isRequired,
+    //         user: PropTypes.string,
+    //         text: PropTypes.string.isRequired
+    //     }).isRequired
+    // )
 }
 
 export default ToggleOpen(CommentList)

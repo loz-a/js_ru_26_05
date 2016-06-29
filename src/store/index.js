@@ -8,7 +8,8 @@ import thunk from 'redux-thunk'
 const logger = createLogger()
 
 const enhancer = compose(
-    applyMiddleware(thunk, callAPI, randomId, logger),
+    // applyMiddleware(thunk, callAPI, randomId, logger),
+    applyMiddleware(thunk, callAPI, randomId),
     window.devToolsExtension ? window.devToolsExtension() : (f) => f
 )
 const store = createStore(reducer, {}, enhancer)
