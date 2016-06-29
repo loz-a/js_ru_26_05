@@ -1,6 +1,7 @@
 import {
     ADD_COMMENT,
     LOAD_All_COMMENTS,
+    LOAD_ITEMS_PER_PAGE,
     START,
     SUCCESS,
     FAIL
@@ -16,6 +17,17 @@ export function loadAllComments() {
             LOAD_All_COMMENTS + FAIL,
         ],
         callAPI: () => $.get('/api/comment')
+    }
+}
+
+export function loadItemsPerPage(limit, offset = 0) {
+    return {
+        types: [
+            LOAD_ITEMS_PER_PAGE + START,
+            LOAD_ITEMS_PER_PAGE + SUCCESS,
+            LOAD_ITEMS_PER_PAGE + FAIL,
+        ],
+        callAPI: () => $.get(`/api/comment?limit=${limit}&offset=${offset}`)
     }
 }
 

@@ -32,12 +32,10 @@ class CommentListContainer extends React.Component {
 }
 
 export default connect(
-    (state, ownProps) => {
-        return {
-            comments: getRelation(state, ownProps.article, 'comments'),
-            loading: state.comments.get('loading'),
-            loaded: state.comments.get('loaded')
-        }
-    },
+    (state, ownProps) => ({
+        comments: getRelation(state, ownProps.article, 'comments'),
+        loading: state.comments.get('loading'),
+        loaded: state.comments.get('loaded')
+    }),
     { loadAllComments }
 )(CommentListContainer)

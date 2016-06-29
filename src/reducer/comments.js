@@ -1,6 +1,7 @@
 import {
     ADD_COMMENT,
     LOAD_All_COMMENTS,
+    LOAD_ITEMS_PER_PAGE,
     START,
     SUCCESS
 } from '../constants'
@@ -11,7 +12,8 @@ import { fromJS } from 'immutable'
 const defaultState = fromJS({
     loading: false,
     loaded: false,
-    entities: {}
+    entities: {},
+    total: undefined
 })
 
 export default (state = defaultState, action) => {
@@ -19,6 +21,7 @@ export default (state = defaultState, action) => {
 
     switch (type) {
         case LOAD_All_COMMENTS + START:
+        case LOAD_ITEMS_PER_PAGE + START:
             return state
                 .set('loading', true)
                 .set('loaded', false)
@@ -27,6 +30,13 @@ export default (state = defaultState, action) => {
             return state
                 .set('loading', false)
                 .set('loaded', true)
+                .set('entities', fromJS(fromArray(response.records)))
+
+        case LOAD_ITEMS_PER_PAGE + SUCCESS:
+            return state
+                .set('loading', false)
+                .set('loaded', true)
+                .set('total', parseInt(response.total))
                 .set('entities', fromJS(fromArray(response.records)))
 
         // case ADD_COMMENT + SUCCESS:

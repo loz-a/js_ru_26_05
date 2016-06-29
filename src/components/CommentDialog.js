@@ -13,7 +13,7 @@ class CommentDialog extends Component {
         const { articleId, addComment } = this.props
         console.log('==CommentDialog handleSubmit context', this.context.user);
 
-        
+
         addComment(
             this.context.user,
             this.state.text,
@@ -32,7 +32,9 @@ class CommentDialog extends Component {
     }
 
     render() {
+        // console.log('-- CommentDialog render context.router', this.context.router);
         console.log('==CommentDialog render context', this.context.user);
+        
         return (
             <form onSubmit = {this.handleSubmit}>
                 {/*<p>
@@ -63,7 +65,8 @@ CommentDialog.propTypes = {
 }
 
 CommentDialog.contextTypes = {
-    user: PropTypes.string
+    user: PropTypes.string,
+    router: PropTypes.object
 }
 
 export default connect(

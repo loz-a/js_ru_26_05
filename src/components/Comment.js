@@ -18,13 +18,14 @@ import React, { PropTypes } from 'react'
 // }
 
 let Comment = ({
-    comment: {text, user}
+    comment: {text, user, id}
 }) => (
     <article>
         <header>
             <h5>
                 Posted By: {user}
             </h5>
+            <h6>No:{id+1}</h6>  
         </header>
         <p>
             {text}
