@@ -37,5 +37,7 @@ export default connect(
         articles: toArray(state.articles.get('entities').toJS()),
         loading: state.articles.get('loading')
     }),
-    { loadAllArticles }
+    { loadAllArticles },
+    null,
+    {pure: false}
 )(ArticleListContainer)
