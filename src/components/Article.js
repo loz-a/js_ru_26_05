@@ -57,14 +57,15 @@ class Article extends React.Component {
 }
 
 Article.propTypes = {
-    article: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        text: PropTypes.string,
-        id: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired
-    }),
+    // article: PropTypes.shape({
+    //     title: PropTypes.string.isRequired,
+    //     text: PropTypes.string,
+    //     id: PropTypes.string.isRequired,
+    //     date: PropTypes.string.isRequired
+    // }),
+    article: PropTypes.object,
     isOpen: PropTypes.bool,
-    openArticle: PropTypes.func.isRequired,
+    openArticle: PropTypes.func,
     deleteArticle: PropTypes.func.isRequired,
     options: PropTypes.object,
     loadingText: PropTypes.bool.isRequired

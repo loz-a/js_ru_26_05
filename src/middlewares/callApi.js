@@ -26,10 +26,7 @@ export default ({dispatch, getState}) => (next) => (action) => {
 
     setTimeout(() => {
         callAPI().then(
-            (response) => {
-                debugger
-                next({...rest, payload, callAPI, response, type: typeSuccess})
-            },
+            (response) => next({...rest, payload, callAPI, response, type: typeSuccess}),
             (error) => next({...rest, payload, callAPI, error, type: typeFailure}))
     }, 1000)
 }

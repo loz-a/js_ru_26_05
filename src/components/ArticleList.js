@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { findDOMNode } from 'react-dom'
+import { Link } from 'react-router'
 import Article from './Article'
 import Chart from './Chart'
 import OneOpen from '../decorators/OneOpen'
@@ -35,7 +36,6 @@ class ArticleList extends Component {
     getArticleItems = () => {
         const {
             articles,
-            isOpen,
             openItem,
             loadingText
          } = this.props
@@ -44,11 +44,12 @@ class ArticleList extends Component {
 
         return articles.map((article) =>
             <li key={article.id}>
-                <Article article = {article}
+                <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                {/*<Article article = {article}
                     isOpen = {isOpen(article.id)}
                     openArticle = {openItem(article.id)}
                     loadingText = {loadingText}
-                />
+                />*/}
             </li>
         )
     }
@@ -77,9 +78,7 @@ class ArticleList extends Component {
 
 ArticleList.propTypes = {
     articles:  PropTypes.array.isRequired,
-    openItem:  PropTypes.func.isRequired,
-    isOpen:    PropTypes.func.isRequired,
-    loadingText: PropTypes.bool.isRequired
+    openItem:  PropTypes.func.isRequired
 }
 
 export default DateRange(OneOpen(ArticleList))
