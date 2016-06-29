@@ -35,5 +35,7 @@ export default connect(
         loading: state.articles.get('loading'),
         loadingText: state.articles.get('loadingText')
     }),
-    { loadAllArticles }
+    { loadAllArticles },
+    null,
+    {pure: false}
 )(ArticleListContainer)
